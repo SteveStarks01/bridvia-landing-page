@@ -2,6 +2,7 @@
 import { useEffect, useRef, useState } from "react"
 import { MeshGradient, PulsingBorder } from "@paper-design/shaders-react"
 import { motion } from "framer-motion"
+import { Sparkles } from "lucide-react"
 
 
 export default function ShaderShowcase() {
@@ -240,7 +241,8 @@ export default function ShaderShowcase() {
             }}
           >
             <div className="absolute top-0 left-1 right-1 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent rounded-full" />
-            <span className="text-white/90 text-xs font-light relative z-10">✨ Shaping Africa's Future Workforce</span>
+            <Sparkles className="w-3 h-3 text-white/90 mr-2 relative z-10" />
+            <span className="text-white/90 text-xs font-light relative z-10">Shaping Africa's Future Workforce</span>
           </div>
 
           {/* Main Heading */}

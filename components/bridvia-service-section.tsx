@@ -1,7 +1,7 @@
 "use client"
 import { motion } from "framer-motion"
 import Link from "next/link"
-import { ArrowRight, Users, Target, TrendingUp, UserCheck } from "lucide-react"
+import { ArrowRight, Users, Target, TrendingUp, UserCheck, Sparkles } from "lucide-react"
 import { useState, useEffect } from "react"
 import UnicornScene from "unicornstudio-react"
 import { cn } from "@/lib/utils"
@@ -88,9 +88,11 @@ const AnimatedBlueBackground = ({ children, className }: { children: React.React
 export default function BridviaServiceSection() {
   return (
     <AnimatedBlueBackground>
-      <section className="relative flex items-center justify-center min-h-[600px] py-24 md:py-32">
+      <section className="relative flex items-center justify-center min-h-[600px] pt-24 md:pt-32 pb-0">
         <div className="absolute inset-0 pointer-events-none">
           <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent" />
+          {/* Gradient transition to Phase 2 */}
+          <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-b from-transparent via-black/20 to-black/40" />
         </div>
         
         <div className="mx-auto max-w-4xl px-6 text-center">
@@ -102,7 +104,8 @@ export default function BridviaServiceSection() {
           >
             {/* Header Section - Maintaining original styling */}
             <div className="inline-flex items-center px-4 py-2 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 mb-6">
-              <span className="text-white/90 text-sm font-light">✨ Phase 1 • Now Available</span>
+              <Sparkles className="w-4 h-4 text-white/90 mr-2" />
+              <span className="text-white/90 text-sm font-light">Phase 1 • Now Available</span>
             </div>
             
             <h2 className="text-4xl md:text-5xl lg:text-6xl font-light tracking-tight text-white mb-6">
