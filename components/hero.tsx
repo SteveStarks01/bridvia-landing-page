@@ -2,7 +2,7 @@
 import { useEffect, useRef, useState } from "react"
 import { MeshGradient, PulsingBorder } from "@paper-design/shaders-react"
 import { motion } from "framer-motion"
-import ThemeToggle from "@/components/theme-toggle"
+
 
 export default function ShaderShowcase() {
   const containerRef = useRef<HTMLDivElement>(null)
@@ -216,8 +216,8 @@ export default function ShaderShowcase() {
           </a>
         </nav>
 
-        {/* Login + Theme Toggle */}
-        <div className="flex items-center gap-3">
+        {/* Login Button */}
+        <div className="flex items-center">
           <div id="gooey-btn" className="relative flex items-center group" style={{ filter: "url(#gooey-filter)" }}>
             <button className="absolute right-0 px-2.5 py-2 rounded-full bg-white text-black font-normal text-xs transition-all duration-300 hover:bg-white/90 cursor-pointer h-8 flex items-center justify-center -translate-x-10 group-hover:-translate-x-19 z-0">
               <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -228,7 +228,6 @@ export default function ShaderShowcase() {
               Login
             </button>
           </div>
-          <ThemeToggle />
         </div>
       </header>
 
