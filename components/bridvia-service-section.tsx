@@ -56,16 +56,16 @@ const AnimatedBlueBackground = ({ children, className }: { children: React.React
     };
   }, []);
 
-  // Fallback gradient for mobile and SSR
+  // Fallback gradient for SSR only
   const FallbackGradient = () => (
     <div className="absolute inset-0 w-full h-full bg-gradient-to-br from-blue-900/30 via-blue-700/40 to-indigo-900/50" />
   );
 
   return (
     <div className={cn("relative overflow-hidden", className)}>
-      {/* Animated Background - Only render on client and desktop */}
+      {/* Animated Background - Render on both desktop and mobile */}
       <div className="absolute inset-0">
-        {isClient && isMounted && !isMobile ? (
+        {isClient && isMounted ? (
           <UnicornScene 
             production={true} 
             projectId="ed7SJMvTJEVxfqzypOOQ" 

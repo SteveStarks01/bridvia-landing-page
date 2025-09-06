@@ -34,21 +34,21 @@ export default function NewsLetter() {
   )
   return (
     <main className="relative min-h-screen overflow-hidden">
-      {/* Background shader - Only render on client and desktop */}
+      {/* Background shader - Render on both desktop and mobile */}
       <div className="absolute inset-0">
-        {isClient && isMounted && !isMobile ? (
+        {isClient && isMounted ? (
           <Warp
             style={{ height: "100%", width: "100%" }}
-            proportion={0.45}
+            proportion={isMobile ? 0.3 : 0.45}
             softness={1}
-            distortion={0.25}
-            swirl={0.8}
-            swirlIterations={10}
+            distortion={isMobile ? 0.15 : 0.25}
+            swirl={isMobile ? 0.6 : 0.8}
+            swirlIterations={isMobile ? 6 : 10}
             shape="checks"
-            shapeScale={0.1}
+            shapeScale={isMobile ? 0.15 : 0.1}
             scale={1}
             rotation={0}
-            speed={1}
+            speed={isMobile ? 0.5 : 1}
             colors={["hsl(340, 100%, 20%)", "hsl(320, 100%, 75%)", "hsl(350, 90%, 30%)", "hsl(330, 100%, 80%)"]}
           />
         ) : (
