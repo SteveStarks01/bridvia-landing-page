@@ -124,8 +124,8 @@ export default function NewsLetter() {
               <Image 
                 src="/logos/Logo Text White.png" 
                 alt="Bridvia" 
-                width={300} 
-                height={80}
+                width={250} 
+                height={60}
                 className="object-contain"
               />
             </div>
