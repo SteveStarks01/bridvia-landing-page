@@ -45,7 +45,7 @@ export default function FooterSection() {
                     href="/"
                     aria-label="go home"
                     className="mx-auto block size-fit mb-8">
-                    <div className="text-foreground text-xl font-medium tracking-tight">Bridvia</div>
+                    <div className="text-foreground text-xl font-medium tracking-tight hover:text-[#106861] transition-colors duration-300">Bridvia</div>
                 </Link>
 
                 <div className="my-8 flex flex-wrap justify-center gap-6 text-sm">
@@ -53,7 +53,7 @@ export default function FooterSection() {
                         <Link
                             key={index}
                             href={link.href}
-                            className="text-muted-foreground hover:text-foreground block duration-200 transition-colors">
+                            className="text-muted-foreground hover:text-[#106861] block duration-200 transition-colors">
                             <span>{link.title}</span>
                         </Link>
                     ))}
@@ -65,7 +65,7 @@ export default function FooterSection() {
                         target="_blank"
                         rel="noopener noreferrer"
                         aria-label="LinkedIn"
-                        className="text-muted-foreground hover:text-foreground block transition-colors">
+                        className="text-muted-foreground hover:text-[#106861] block transition-colors">
                         <Linkedin className="size-5" />
                     </Link>
                     <Link
@@ -73,7 +73,7 @@ export default function FooterSection() {
                         target="_blank"
                         rel="noopener noreferrer"
                         aria-label="Twitter"
-                        className="text-muted-foreground hover:text-foreground block transition-colors">
+                        className="text-muted-foreground hover:text-[#106861] block transition-colors">
                         <Twitter className="size-5" />
                     </Link>
                     <Link
@@ -81,7 +81,7 @@ export default function FooterSection() {
                         target="_blank"
                         rel="noopener noreferrer"
                         aria-label="GitHub"
-                        className="text-muted-foreground hover:text-foreground block transition-colors">
+                        className="text-muted-foreground hover:text-[#106861] block transition-colors">
                         <Github className="size-5" />
                     </Link>
                     <Link
@@ -89,7 +89,7 @@ export default function FooterSection() {
                         target="_blank"
                         rel="noopener noreferrer"
                         aria-label="Email"
-                        className="text-muted-foreground hover:text-foreground block transition-colors">
+                        className="text-muted-foreground hover:text-[#106861] block transition-colors">
                         <Mail className="size-5" />
                     </Link>
                     <Link
@@ -97,7 +97,7 @@ export default function FooterSection() {
                         target="_blank"
                         rel="noopener noreferrer"
                         aria-label="Website"
-                        className="text-muted-foreground hover:text-foreground block transition-colors">
+                        className="text-muted-foreground hover:text-[#106861] block transition-colors">
                         <Globe className="size-5" />
                     </Link>
                     <Link
@@ -105,14 +105,14 @@ export default function FooterSection() {
                         target="_blank"
                         rel="noopener noreferrer"
                         aria-label="Blog"
-                        className="text-muted-foreground hover:text-foreground block transition-colors">
+                        className="text-muted-foreground hover:text-[#106861] block transition-colors">
                         <BookOpen className="size-5" />
                     </Link>
                 </div>
                 
                 <div className="text-center">
                     <p className="text-muted-foreground text-xs mb-2">
-                        Bridging the gap between talent and opportunity. Shaping Africa's future workforce.
+                        Building infrastructure that connects talent with opportunity. Bridging the gap between education and industry.
                     </p>
                     <span className="text-muted-foreground block text-xs">
                         © {new Date().getFullYear()} Bridvia. All rights reserved.

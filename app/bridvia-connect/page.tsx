@@ -2,6 +2,7 @@
 import { useEffect } from "react";
 import Hero from "@/components/hero";
 import Sections from "@/components/sections";
+import ScrollAIPanel from "@/components/scroll-ai-panel";
 
 // Note: Since this is a client component, metadata needs to be handled by the root layout
 // The title will be "BridviaConnect - Bridge Your Career Journey" via document.title if needed
@@ -22,8 +23,11 @@ export default function BridviaConnectPage() {
 
   return (
     <>
-      <Hero />
+      <div data-first-section>
+        <Hero />
+      </div>
       <Sections />
+      <ScrollAIPanel userLocation="bridvia-connect" />
     </>
   );
 }

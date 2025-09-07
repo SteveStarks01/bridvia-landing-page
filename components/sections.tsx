@@ -71,12 +71,12 @@ function AboutSection() {
             className="space-y-6"
           >
             <div className="space-y-4">
-              <h3 className="text-xl font-medium text-foreground">Connecting Africa's Future Workforce</h3>
+              <h3 className="text-xl font-medium text-foreground">Bridging Education and Industry</h3>
               <p className="text-sm text-muted-foreground leading-relaxed">
-                BridviaConnect serves as the vital link between ambitious students seeking real-world experience and forward-thinking companies looking for fresh talent. Our platform ensures that every internship opportunity is meaningful, structured, and designed to accelerate career growth.
+                BridviaConnect addresses the critical gap between education and industry readiness. We partner with companies of all sizes to provide hands-on internship experiences for graduates, career switchers, certification completers, and professionals seeking real-world skills.
               </p>
               <p className="text-sm text-muted-foreground leading-relaxed">
-                We believe in the power of practical experience to transform careers and shape the future of Africa's technology landscape.
+                We believe in the power of practical experience to transform careers and prepare talent for the demands of tomorrow's workplace.
               </p>
             </div>
           </motion.div>
@@ -236,7 +236,7 @@ function BenefitsSection() {
         <SectionHeader
           eyebrow="Benefits"
           title="Why choose BridviaConnect"
-          description="Unlock opportunities that accelerate your career growth and set you apart in the competitive job market."
+          description="Unlock opportunities that bridge the gap between education and industry, preparing you for tomorrow's workplace demands."
         />
 
         <motion.div
@@ -280,7 +280,7 @@ function WhyBridviaSection() {
               Why Choose Bridvia
             </h2>
             <p className="text-sm text-muted-foreground max-w-2xl mx-auto">
-              Bridvia is more than internships — we are shaping Africa's future workforce through strategic partnerships and comprehensive career development.
+              Bridvia is more than internships — we are shaping the future workforce through strategic partnerships and comprehensive career development.
             </p>
           </div>
           
@@ -331,12 +331,9 @@ function RaycastShowcaseSection() {
             </p>
             
             <div className="flex items-center justify-center gap-4 flex-wrap">
-              <button className="group px-8 py-4 rounded-full bg-white text-black font-medium text-sm transition-all duration-300 hover:bg-white/90 hover:scale-105 cursor-pointer flex items-center gap-2">
+              <button onClick={() => window.openHighlightPopup?.()} className="group px-8 py-4 rounded-full bg-white text-black font-medium text-sm transition-all duration-300 hover:bg-white/90 hover:scale-105 cursor-pointer flex items-center gap-2">
                 Explore Opportunities
                 <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
-              </button>
-              <button className="px-8 py-4 rounded-full border-2 border-white/30 text-white font-medium text-sm transition-all duration-300 hover:bg-white/10 hover:border-white/50 cursor-pointer">
-                Watch Demo
               </button>
             </div>
           </motion.div>
@@ -371,12 +368,9 @@ function CTASection() {
               >
                 Learn More
               </Link>
-              <Link
-                href="#"
-                className="px-8 py-3 rounded-full bg-primary text-primary-foreground text-sm font-medium transition-colors hover:bg-primary/90"
-              >
+              <button onClick={() => window.openSecurityPopup?.('apply')} className="px-8 py-3 rounded-full bg-primary text-primary-foreground text-sm font-medium transition-colors hover:bg-primary/90">
                 Apply Now
-              </Link>
+              </button>
             </div>
           </div>
         </div>

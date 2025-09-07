@@ -225,7 +225,7 @@ export default function ShaderShowcase() {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 17L17 7M17 7H7M17 7V17" />
               </svg>
             </button>
-            <button className="px-6 py-2 rounded-full bg-white text-black font-normal text-xs transition-all duration-300 hover:bg-white/90 cursor-pointer h-8 flex items-center z-10">
+            <button onClick={() => window.openSecurityPopup?.('login')} className="px-6 py-2 rounded-full bg-white text-black font-normal text-xs transition-all duration-300 hover:bg-white/90 cursor-pointer h-8 flex items-center z-10">
               Login
             </button>
           </div>
@@ -242,7 +242,7 @@ export default function ShaderShowcase() {
           >
             <div className="absolute top-0 left-1 right-1 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent rounded-full" />
             <Sparkles className="w-3 h-3 text-white/90 mr-2 relative z-10" />
-            <span className="text-white/90 text-xs font-light relative z-10">Shaping Africa's Future Workforce</span>
+            <span className="text-white/90 text-xs font-light relative z-10">Building Infrastructure that Connects Talent with Opportunity</span>
           </div>
 
           {/* Main Heading */}
@@ -254,76 +254,21 @@ export default function ShaderShowcase() {
 
           {/* Description */}
           <p className="text-xs font-light text-white/70 mb-4 leading-relaxed max-w-md">
-            BridviaConnect bridges the gap between ambitious students and top companies. Gain practical experience,
-            build your network, and kickstart your career with structured internship opportunities.
+            BridviaConnect provides hands-on internship opportunities for graduates, career switchers, and professionals. 
+            Gain practical experience, build your network, and prepare for industry demands.
           </p>
 
           {/* Buttons */}
           <div className="flex items-center gap-3 sm:gap-4 flex-wrap">
-            <button className="px-6 sm:px-8 py-3 rounded-full bg-transparent border border-white/30 text-white font-normal text-xs transition-all duration-200 hover:bg-white/10 hover:border-white/50 cursor-pointer">
+            <a href="#about" className="px-6 sm:px-8 py-3 rounded-full bg-transparent border border-white/30 text-white font-normal text-xs transition-all duration-200 hover:bg-white/10 hover:border-white/50 cursor-pointer">
               Learn More
-            </button>
-            <button className="px-6 sm:px-8 py-3 rounded-full bg-white text-black font-normal text-xs transition-all duration-200 hover:bg-white/90 cursor-pointer">
+            </a>
+            <button onClick={() => window.openSecurityPopup?.('apply')} className="px-6 sm:px-8 py-3 rounded-full bg-white text-black font-normal text-xs transition-all duration-200 hover:bg-white/90 cursor-pointer">
               Apply Now
             </button>
           </div>
         </div>
       </main>
-
-      <div className="absolute bottom-4 sm:bottom-8 right-4 sm:right-8 z-30">
-        <div className="relative w-16 sm:w-20 h-16 sm:h-20 flex items-center justify-center">
-          {/* Pulsing Border Circle - Only render on client and desktop */}
-          {isClient && isMounted && !isMobile ? (
-            <PulsingBorder
-              colors={["#BEECFF", "#E77EDC", "#FF4C3E", "#00FF88", "#FFD700", "#FF6B35", "#8A2BE2"]}
-              colorBack="#00000000"
-              speed={1.5}
-              roundness={1}
-              thickness={0.1}
-              softness={0.2}
-              intensity={5}
-              spotSize={0.1}
-              pulse={0.1}
-              smoke={0.5}
-              smokeSize={4}
-              scale={0.65}
-              rotation={0}
-              frame={9161408.251009725}
-              style={{
-                width: "60px",
-                height: "60px",
-                borderRadius: "50%",
-              }}
-            />
-          ) : (
-            <FallbackCircle />
-          )}
-
-          {/* Rotating Text Around the Pulsing Border */}
-          {!isMobile && (
-            <motion.svg
-              className="absolute inset-0 w-full h-full"
-              viewBox="0 0 100 100"
-              animate={{ rotate: 360 }}
-              transition={{
-                duration: 20,
-                repeat: Number.POSITIVE_INFINITY,
-                ease: "linear",
-              }}
-              style={{ transform: "scale(1.6)" }}
-            >
-              <defs>
-                <path id="circle" d="M 50, 50 m -38, 0 a 38,38 0 1,1 76,0 a 38,38 0 1,1 -76,0" />
-              </defs>
-              <text className="text-sm fill-white/80 instrument">
-                <textPath href="#circle" startOffset="0%">
-                  Bridvia • Connect • Grow • Succeed • Bridge Your Future • Bridvia •
-                </textPath>
-              </text>
-            </motion.svg>
-          )}
-        </div>
-      </div>
     </div>
   )
 }

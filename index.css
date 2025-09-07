@@ -1,0 +1,27 @@
+@keyframes draw {
+  0% {
+    stroke-dasharray: 0 1000;
+  }
+  100% {
+    stroke-dasharray: 1000 1000;
+  }
+}
+
+@keyframes draw-outline {
+  0% {
+    stroke-dasharray: 0 1000;
+  }
+  100% {
+    stroke-dasharray: 1000 1000;
+  }
+}
+
+.animate-draw {
+  stroke-dasharray: 0 1000;
+  animation: draw 1.5s ease-in-out 1.2s forwards;
+}
+
+.animate-draw-outline {
+  stroke-dasharray: 0 1000;
+  animation: draw-outline 1.5s ease-in-out 0.8s forwards;
+}

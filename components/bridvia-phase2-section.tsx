@@ -57,7 +57,7 @@ const AnimatedBlackBackground = ({ children, className }: { children: React.Reac
 
   // Fallback gradient for SSR
   const FallbackGradient = () => (
-    <div className="absolute inset-0 w-full h-full bg-gradient-to-br from-black via-gray-900/80 to-black" />
+    <div className="absolute inset-0 w-full h-full bg-gradient-to-br from-[#0d4449] via-[#0a3d35] to-black" />
   );
 
   return (
@@ -76,9 +76,6 @@ const AnimatedBlackBackground = ({ children, className }: { children: React.Reac
         )}
       </div>
       
-      {/* Blur overlay for suspense effect */}
-      <div className="absolute inset-0 backdrop-blur-[2px] bg-black/30" />
-      
       {/* Content overlay */}
       <div className="relative z-10">
         {children}
@@ -90,77 +87,34 @@ const AnimatedBlackBackground = ({ children, className }: { children: React.Reac
 export default function BridviaPhase2Section() {
   return (
     <AnimatedBlackBackground>
-      <section className="relative flex items-center justify-center min-h-[500px] -mt-24 pt-32 pb-20">
-        {/* Smooth gradient transition from Phase 1 */}
-        <div className="absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-blue-900/20 via-gray-900/40 to-transparent pointer-events-none" />
-        
+      <section className="relative min-h-[600px] flex flex-col items-center justify-center pt-24 md:pt-32 pb-24 md:pb-32">
         <div className="mx-auto max-w-4xl px-6 text-center">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.3 }}
             transition={{ duration: 1, ease: "easeOut" }}
-            className="relative"
+            className="flex flex-col items-center justify-center space-y-8"
           >
-            {/* Mysterious Badge - Now Visible */}
-            <div className="inline-flex items-center px-4 py-2 rounded-full bg-white/5 backdrop-blur-sm border border-white/10 mb-6 relative">
+            {/* Mysterious Badge - Perfectly Centered */}
+            <div className="inline-flex items-center px-4 py-2 rounded-full bg-white/5 backdrop-blur-sm border border-white/10">
               <Sparkles className="w-4 h-4 text-white/60 mr-2" />
               <span className="text-white/70 text-sm font-light">Phase 2 • Coming Soon</span>
             </div>
             
-            {/* Clear Main Headline */}
-            <div className="relative">
-              <h2 className="text-3xl md:text-4xl lg:text-5xl font-light tracking-tight text-white mb-4">
+            {/* Main Headline - Perfectly Centered */}
+            <div className="space-y-4">
+              <h2 className="text-4xl md:text-5xl lg:text-6xl font-light tracking-tight text-white leading-tight">
                 The Next <span className="font-medium italic text-transparent bg-gradient-to-r from-white to-white/80 bg-clip-text">Evolution</span>
-                <br />
-                <span className="text-white/90">Beyond Connection</span>
               </h2>
+              <h3 className="text-3xl md:text-4xl lg:text-5xl font-light text-white/90">
+                Beyond Connection
+              </h3>
               
               {/* Coming Soon Text */}
-              <p className="text-lg text-white/70 mb-8 font-light tracking-wide">
+              <p className="text-xl text-white/70 font-light tracking-wide mt-6">
                 Coming Soon
               </p>
-              
-              {/* Everything below heavily blurred and abstract */}
-              <div className="space-y-4 mb-10 blur-[12px]">
-                <div className="flex items-center justify-center gap-3">
-                  <div className="w-5 h-5 bg-gray-700/40 rounded" />
-                  <div className="w-32 h-3 bg-gray-600/30 rounded" />
-                </div>
-                
-                <div className="flex items-center justify-center gap-3">
-                  <div className="w-5 h-5 bg-gray-700/40 rounded" />
-                  <div className="w-36 h-3 bg-gray-600/30 rounded" />
-                </div>
-                
-                <div className="flex items-center justify-center gap-3">
-                  <div className="w-5 h-5 bg-gray-700/40 rounded" />
-                  <div className="w-28 h-3 bg-gray-600/30 rounded" />
-                </div>
-              </div>
-              
-              {/* Abstract blurred paragraph */}
-              <div className="mb-12 max-w-xl mx-auto space-y-2 blur-[15px]">
-                <div className="w-full h-3 bg-gray-600/20 rounded" />
-                <div className="w-5/6 h-3 bg-gray-600/20 rounded mx-auto" />
-                <div className="w-4/5 h-3 bg-gray-600/20 rounded mx-auto" />
-              </div>
-            </div>
-            
-            {/* Heavily blurred CTA */}
-            <div className="flex items-center justify-center">
-              <div className="px-8 py-4 rounded-full bg-black/20 border border-gray-800/20 backdrop-blur-lg blur-[10px]">
-                <div className="flex items-center gap-2">
-                  <div className="w-4 h-4 bg-gray-700/40 rounded" />
-                  <div className="w-16 h-3 bg-gray-600/30 rounded" />
-                  <div className="w-2 h-2 bg-gray-700/40 rounded-full" />
-                </div>
-              </div>
-            </div>
-            
-            {/* Abstract hint - heavily blurred */}
-            <div className="mt-8 blur-[12px]">
-              <div className="w-48 h-2 bg-gray-700/20 rounded mx-auto" />
             </div>
           </motion.div>
         </div>

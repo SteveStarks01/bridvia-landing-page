@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import PopupManager from "@/components/popup-manager";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -13,8 +14,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Bridvia - Shaping Africa's Future Workforce",
-  description: "Bridvia revolutionizes career development across Africa through innovative technology solutions. Explore our services including BridviaConnect for internship opportunities and professional growth.",
+  title: "Bridvia - Shaping the Future Workforce",
+  description: "Bridvia revolutionizes career development through innovative technology solutions. Explore our services including BridviaConnect for internship opportunities and professional growth.",
 };
 
 export default function RootLayout({
@@ -36,6 +37,7 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         {children}
+        <PopupManager />
       </body>
     </html>
   );

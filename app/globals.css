@@ -41,6 +41,46 @@
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
+  @keyframes draw-outline {
+  from {
+    stroke-dasharray: 160;
+    stroke-dashoffset: 160;
+    }
+  to {
+    stroke-dasharray: 160;
+    stroke-dashoffset: 0;
+    }
+  }
+  @keyframes draw {
+  from {
+    stroke-dasharray: 100;
+    stroke-dashoffset: 100;
+    }
+  to {
+    stroke-dasharray: 100;
+    stroke-dashoffset: 0;
+    }
+  }
+  @keyframes draw-outline {
+  from {
+    stroke-dasharray: 160;
+    stroke-dashoffset: 160;
+    }
+  to {
+    stroke-dasharray: 160;
+    stroke-dashoffset: 0;
+    }
+  }
+  @keyframes draw {
+  from {
+    stroke-dasharray: 100;
+    stroke-dashoffset: 100;
+    }
+  to {
+    stroke-dasharray: 100;
+    stroke-dashoffset: 0;
+    }
+  }
 }
 
 :root {

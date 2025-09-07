@@ -58,7 +58,7 @@ const AnimatedBlueBackground = ({ children, className }: { children: React.React
 
   // Fallback gradient for SSR only
   const FallbackGradient = () => (
-    <div className="absolute inset-0 w-full h-full bg-gradient-to-br from-blue-900/30 via-blue-700/40 to-indigo-900/50" />
+    <div className="absolute inset-0 w-full h-full bg-gradient-to-br from-[#106861] via-[#104661] to-[#0d4449]" />
   );
 
   return (
@@ -66,12 +66,16 @@ const AnimatedBlueBackground = ({ children, className }: { children: React.React
       {/* Animated Background - Render on both desktop and mobile */}
       <div className="absolute inset-0">
         {isClient && isMounted ? (
-          <UnicornScene 
-            production={true} 
-            projectId="ed7SJMvTJEVxfqzypOOQ" 
-            width={width} 
-            height={height} 
-          />
+          <>
+            <UnicornScene 
+              production={true} 
+              projectId="ed7SJMvTJEVxfqzypOOQ" 
+              width={width} 
+              height={height} 
+            />
+            {/* Brand color overlay to blend with teal theme */}
+            <div className="absolute inset-0 bg-gradient-to-br from-[#106861]/25 via-transparent to-[#0d4449]/30 mix-blend-overlay" />
+          </>
         ) : (
           <FallbackGradient />
         )}
@@ -88,11 +92,9 @@ const AnimatedBlueBackground = ({ children, className }: { children: React.React
 export default function BridviaServiceSection() {
   return (
     <AnimatedBlueBackground>
-      <section className="relative flex items-center justify-center min-h-[600px] pt-24 md:pt-32 pb-0">
+      <section id="services" className="relative flex items-center justify-center min-h-[600px] pt-24 md:pt-32 pb-0">
         <div className="absolute inset-0 pointer-events-none">
           <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent" />
-          {/* Gradient transition to Phase 2 */}
-          <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-b from-transparent via-black/20 to-black/40" />
         </div>
         
         <div className="mx-auto max-w-4xl px-6 text-center">
@@ -115,8 +117,8 @@ export default function BridviaServiceSection() {
             </h2>
             
             <p className="text-lg text-white/80 mb-12 max-w-2xl mx-auto leading-relaxed">
-              BridviaConnect bridges the gap between Africa's brightest students and leading companies through 
-              structured internship programs that accelerate careers.
+              BridviaConnect is our Phase 1 solution, providing early access to internship opportunities that bridge 
+              the gap between education and industry readiness, preparing talent for tomorrow's challenges.
             </p>
             
             {/* CTA Buttons */}
