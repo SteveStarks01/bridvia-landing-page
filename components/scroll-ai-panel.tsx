@@ -151,9 +151,10 @@ export default function ScrollAIPanel({ heroSectionSelector = ".hero-section", u
       style={{
         visibility: isVisible ? 'visible' : 'hidden'
       }}
-      onClick={handleMobileClick}
     >
-      <MorphPanel userLocation={userLocation} />
+      <div onClick={handleMobileClick}>
+        <MorphPanel userLocation={userLocation} />
+      </div>
     </motion.div>
   );
 }
