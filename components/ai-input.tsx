@@ -265,8 +265,43 @@ export function MorphPanel({ userLocation }: { userLocation?: 'main' | 'bridvia-
       const data = await response.json()
       let aiResponse = data.response || data.fallbackResponse || 'I apologize, but I encountered an issue. Please contact us at info@bridvia.com.'
       
-      // Filter out thinking process from AI response
-      aiResponse = aiResponse.replace(/◁think▷[\s\S]*?◁\/think▷/g, '').trim()
+      // Filter out thinking process from AI response with multiple strategies
+      let cleanResponse = aiResponse;
+      
+      // Remove explicit thinking markers
+      cleanResponse = cleanResponse.replace(/◁think▷[\s\S]*?◁\/think▷/g, '');
+      
+      // Remove thinking content that starts with common thinking patterns
+      cleanResponse = cleanResponse.replace(/^[\s\S]*?(?=(?:Hello|Hi|Hey|Welcome|Good|I'm|Brid|Thanks|Great|What|Sure|Absolutely|Of course|That's|This|Bridvia|The|Our|For|We're|BridviaConnect))/i, '');
+      
+      // If the response is too short or empty after filtering, try a different approach
+      if (cleanResponse.trim().length < 20) {
+        // Look for content after thinking markers
+        const sentences = aiResponse.split('.');
+        const goodSentences = sentences.filter((sentence: string) => {
+          const s = sentence.trim().toLowerCase();
+          return s.length > 10 && 
+                 !s.startsWith('okay') && 
+                 !s.startsWith('let\'s see') && 
+                 !s.startsWith('looking at') && 
+                 !s.startsWith('wait') && 
+                 !s.startsWith('but wait') && 
+                 !s.startsWith('first') && 
+                 !s.startsWith('the user') && 
+                 !s.startsWith('i need') && 
+                 !s.includes('the correct response') &&
+                 !s.includes('should be');
+        });
+        
+        if (goodSentences.length > 0) {
+          cleanResponse = goodSentences.join('.').trim();
+          if (!cleanResponse.endsWith('.') && !cleanResponse.endsWith('!') && !cleanResponse.endsWith('?')) {
+            cleanResponse += '.';
+          }
+        }
+      }
+      
+      aiResponse = cleanResponse.trim();
       
       // Add AI response to conversation history
       const updatedHistory = [...newHistory, { role: 'assistant', content: aiResponse }]
@@ -283,7 +318,15 @@ export function MorphPanel({ userLocation }: { userLocation?: 'main' | 'bridvia-
       let fallbackResponse = `I understand you're asking about "${userMessage.substring(0, 50)}${userMessage.length > 50 ? '...' : ''}". I apologize, but I'm currently unable to process your request. Please contact us at info@bridvia.com for assistance with your inquiry about our platform and services.`
       
       // Filter out any thinking process that might be in fallback responses too
-      fallbackResponse = fallbackResponse.replace(/◁think▷[\s\S]*?◁\/think▷/g, '').trim()
+      let cleanFallback = fallbackResponse;
+      
+      // Remove explicit thinking markers
+      cleanFallback = cleanFallback.replace(/◁think▷[\s\S]*?◁\/think▷/g, '');
+      
+      // Remove thinking content that starts with common thinking patterns
+      cleanFallback = cleanFallback.replace(/^[\s\S]*?(?=(?:Hello|Hi|Hey|Welcome|Good|I'm|Brid|Thanks|Great|What|Sure|Absolutely|Of course|That's|This|Bridvia|The|Our|For|We're|BridviaConnect))/i, '');
+      
+      fallbackResponse = cleanFallback.trim();
       
       const updatedHistory = [...newHistory, { role: 'assistant', content: fallbackResponse }]
       setConversationHistory(updatedHistory)
