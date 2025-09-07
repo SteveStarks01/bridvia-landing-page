@@ -137,6 +137,14 @@ We're actively developing partnerships with leading companies and curating high-
   private createSystemPrompt(userLocation: 'main' | 'bridvia-connect'): string {
     const basePrompt = `You are Brid AI, Bridvia's intelligent and personable assistant. You embody the vision and values of the Bridvia platform with a warm, professional, and genuinely helpful personality.
 
+CRITICAL RESPONSE INSTRUCTIONS:
+- NEVER include thinking processes, reasoning steps, or internal deliberation in your responses
+- NEVER start responses with phrases like "Okay, let's", "Let me think", "Looking at", "First, I", "The user", etc.
+- Your responses should be direct, natural, and conversational from the very first word
+- Skip all analysis and jump straight to your helpful response
+- Do NOT explain your reasoning process or how you arrived at your answer
+- Be warm and professional but avoid any meta-commentary about your thought process
+
 Personality & Communication Style:
 - Be conversational, warm, and genuinely enthusiastic about helping people bridge their career gaps
 - Speak like a knowledgeable career advisor who truly cares about the person's success
@@ -197,6 +205,67 @@ You're helping someone explore the main Bridvia platform, so you can discuss:
 Feel free to paint the bigger picture of what we're building while being transparent about current development phases.`;
   }
 
+  // Comprehensive response cleaning function
+  private cleanAIResponse(response: string): string {
+    let cleanResponse = response;
+    
+    // Remove all forms of thinking markers and content
+    cleanResponse = cleanResponse.replace(/◁think▷[\s\S]*?◁\/think▷/g, '');
+    cleanResponse = cleanResponse.replace(/think▷[\s\S]*?◁\/think▷/g, '');
+    cleanResponse = cleanResponse.replace(/hink▷[\s\S]*?◁\/think▷/g, ''); // Handle truncated markers
+    cleanResponse = cleanResponse.replace(/<think>[\s\S]*?<\/think>/g, '');
+    cleanResponse = cleanResponse.replace(/\[thinking\][\s\S]*?\[\/thinking\]/g, '');
+    cleanResponse = cleanResponse.replace(/\[THOUGHT\][\s\S]*?\[\/THOUGHT\]/g, '');
+    
+    // Remove thinking patterns at the start of responses
+    cleanResponse = cleanResponse.replace(/^(?:hink▷|think▷|Okay,?\s*let's|Let me think|Looking at|First,?\s*I|The user|I need to|Should be|Wait,?\s*|But wait|Let me|I should|Actually,?\s*let me|Hmm,?\s*|Well,?\s*)[\s\S]*?(?=(?:Hello|Hi|Hey|Welcome|Good|I'm|Brid|Thanks|Great|What|Sure|Absolutely|Of course|That's|This|Bridvia|The|Our|For|We're|BridviaConnect|I understand|I appreciate|I'd|It's|You|Your))/i, '');
+    
+    // Remove meta-commentary about thinking
+    cleanResponse = cleanResponse.replace(/^[\s\S]*?(?:to tackle this|let me analyze|thinking about|considering|examining)[\s\S]*?(?=(?:Hello|Hi|Hey|Welcome|Good|I'm|Brid|Thanks|Great|What|Sure|Absolutely|Of course|That's|This|Bridvia|The|Our|For|We're|BridviaConnect|I understand|I appreciate))/i, '');
+    
+    // Clean up extra whitespace and formatting
+    cleanResponse = cleanResponse.replace(/\s+/g, ' ').trim();
+    
+    // Advanced sentence-based filtering if response still contains thinking patterns
+    if (cleanResponse.length < 20 || /(?:hink▷|think▷|okay\s*,?\s*let's|let's see|looking at|wait\s*,?|first\s*,?|the user|i need|should be|checking|analyzing|let me think|hmm|well,?\s*let|actually,?\s*let)/i.test(cleanResponse.substring(0, 150))) {
+      const sentences = response.split(/[.!?\n]+/);
+      const validSentences = sentences.filter((sentence: string) => {
+        const s = sentence.trim().toLowerCase();
+        return s.length > 15 && 
+               !s.includes('hink▷') &&
+               !s.includes('think▷') &&
+               !s.includes('okay, let\'s') &&
+               !s.includes('let\'s see') &&
+               !s.includes('looking at') &&
+               !s.includes('wait,') &&
+               !s.includes('first,') &&
+               !s.includes('the user') &&
+               !s.includes('i need') &&
+               !s.includes('should be') &&
+               !s.includes('checking') &&
+               !s.includes('analyzing') &&
+               !s.includes('let me think') &&
+               !s.includes('hmm,') &&
+               !s.includes('well, let') &&
+               !s.includes('actually, let') &&
+               (s.includes('hello') || s.includes('hi') || s.includes('bridvia') || s.includes('i\'m') || s.includes('welcome') || s.includes('great') || s.includes('thanks') || s.includes('our') || s.includes('we') || s.includes('brid ai') || s.includes('assistant') || s.includes('you') || s.includes('your'));
+      });
+      
+      if (validSentences.length > 0) {
+        cleanResponse = validSentences.join('. ').trim();
+        // Ensure proper sentence ending
+        if (!cleanResponse.match(/[.!?]$/)) {
+          cleanResponse += '.';
+        }
+      } else {
+        // If no valid sentences found, provide a generic fallback
+        cleanResponse = "Hello! I'm Brid AI, and I'm here to help you explore Bridvia's internship opportunities and career development platform. How can I assist you today?";
+      }
+    }
+    
+    return cleanResponse;
+  }
+
   async generateResponse(
     message: string, 
     conversationHistory: OpenRouterMessage[] = [],
@@ -234,7 +303,9 @@ Feel free to paint the bigger picture of what we're building while being transpa
           max_tokens: 500,
           temperature: 0.7,
           top_p: 0.9,
-          stream: false
+          stream: false,
+          // Additional parameters to reduce thinking processes
+          stop: ['◁think▷', 'think▷', '<think>', '[thinking]', '[THOUGHT]']
         })
       });
 
@@ -243,7 +314,12 @@ Feel free to paint the bigger picture of what we're building while being transpa
       }
 
       const data: OpenRouterResponse = await response.json();
-      return data.choices[0]?.message?.content || 'I apologize, but I encountered an issue processing your request. Please try again or contact us at info@bridvia.com.';
+      const rawResponse = data.choices[0]?.message?.content || 'I apologize, but I encountered an issue processing your request. Please try again or contact us at info@bridvia.com.';
+      
+      // Clean the response thoroughly
+      const cleanedResponse = this.cleanAIResponse(rawResponse);
+      
+      return cleanedResponse;
 
     } catch (error) {
       console.error('OpenRouter API Error:', error);
@@ -295,7 +371,9 @@ Feel free to paint the bigger picture of what we're building while being transpa
           max_tokens: 500,
           temperature: 0.7,
           top_p: 0.9,
-          stream: true
+          stream: true,
+          // Additional parameters to reduce thinking processes
+          stop: ['◁think▷', 'think▷', '<think>', '[thinking]', '[THOUGHT]']
         })
       });
 
@@ -310,6 +388,8 @@ Feel free to paint the bigger picture of what we're building while being transpa
 
       const decoder = new TextDecoder();
       let buffer = '';
+      let fullResponse = '';
+      let isThinkingContent = false;
 
       while (true) {
         const { done, value } = await reader.read();
@@ -322,13 +402,39 @@ Feel free to paint the bigger picture of what we're building while being transpa
         for (const line of lines) {
           if (line.startsWith('data: ')) {
             const data = line.slice(6);
-            if (data === '[DONE]') return;
+            if (data === '[DONE]') {
+              // Clean and yield the final response
+              const cleanedResponse = this.cleanAIResponse(fullResponse);
+              if (cleanedResponse !== fullResponse) {
+                // If cleaning changed the response significantly, re-yield the clean version
+                yield '\n\n' + cleanedResponse;
+              }
+              return;
+            }
 
             try {
               const chunk: StreamChunk = JSON.parse(data);
               const content = chunk.choices[0]?.delta?.content;
               if (content) {
-                yield content;
+                fullResponse += content;
+                
+                // Basic real-time filtering - skip obvious thinking content
+                const lowerContent = content.toLowerCase();
+                if (lowerContent.includes('think▷') || lowerContent.includes('hink▷') || 
+                    (fullResponse.length < 50 && (lowerContent.includes('okay') || lowerContent.includes('let me') || lowerContent.includes('first')))) {
+                  isThinkingContent = true;
+                  continue;
+                }
+                
+                // Reset thinking flag if we hit good content
+                if (isThinkingContent && (lowerContent.includes('hello') || lowerContent.includes('hi') || lowerContent.includes('bridvia') || lowerContent.includes('i\'m'))) {
+                  isThinkingContent = false;
+                }
+                
+                // Only yield if not thinking content
+                if (!isThinkingContent) {
+                  yield content;
+                }
               }
             } catch (e) {
               // Skip invalid JSON chunks

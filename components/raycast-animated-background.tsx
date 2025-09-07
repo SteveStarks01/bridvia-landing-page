@@ -1,7 +1,7 @@
 "use client"
 import { cn } from "@/lib/utils";
 import { useState, useEffect } from "react";
-import SafeUnicornScene from "./safe-unicorn-scene";
+import { UnicornScene } from '@unicorn-studio/react';
 
 export const useWindowSize = () => {
   const [windowSize, setWindowSize] = useState({
@@ -39,7 +39,7 @@ export const Component = () => {
 
   if (!isMounted) {
     return (
-      <div className={cn("flex flex-col items-center bg-gradient-to-br from-purple-900/30 via-blue-900/30 to-indigo-900/40")}>
+      <div className={cn("flex flex-col items-center")}>
         <div style={{ width, height }} />
       </div>
     );
@@ -47,16 +47,11 @@ export const Component = () => {
 
   return (
     <div className={cn("flex flex-col items-center")}>
-      <SafeUnicornScene 
+      <UnicornScene 
         production={true} 
         projectId="cbmTT38A0CcuYxeiyj5H" 
         width={width} 
         height={height}
-        fallbackGradient={{
-          from: 'from-purple-900/30',
-          via: 'via-blue-900/30',
-          to: 'to-indigo-900/40'
-        }}
       />
     </div>
   );
@@ -74,42 +69,18 @@ export const RaycastBackground = ({
 }) => {
   const { width } = useWindowSize();
   const [isMounted, setIsMounted] = useState(false);
-  const [isClient, setIsClient] = useState(false);
-  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
     setIsMounted(true);
-    setIsClient(true);
-    
-    // Detect mobile devices for potential optimizations
-    const checkIsMobile = () => {
-      const userAgent = navigator.userAgent || navigator.vendor || (window as any).opera;
-      const isMobileUA = /android|iphone|ipad|ipod|blackberry|iemobile|opera mini/i.test(userAgent.toLowerCase());
-      const isSmallScreen = window.innerWidth <= 768;
-      setIsMobile(isMobileUA || isSmallScreen);
-    };
-    
-    checkIsMobile();
-    window.addEventListener('resize', checkIsMobile);
-    
-    return () => {
-      window.removeEventListener('resize', checkIsMobile);
-    };
   }, []);
 
-  // Fallback gradient for SSR only
-  const FallbackGradient = () => (
-    <>
-      <div className="absolute inset-0 bg-gradient-to-br from-purple-900/30 via-blue-900/30 to-indigo-900/40" />
-      <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
-    </>
-  );
-
-  if (!isMounted || !isClient) {
+  if (!isMounted) {
     return (
       <div className={cn("relative overflow-hidden", className)} style={{ height }}>
-        <FallbackGradient />
-        {children}
+        <div className="absolute inset-0" />
+        <div className="relative z-10">
+          {children}
+        </div>
       </div>
     );
   }
@@ -117,16 +88,11 @@ export const RaycastBackground = ({
   return (
     <div className={cn("relative overflow-hidden", className)} style={{ height }}>
       <div className="absolute inset-0">
-        <SafeUnicornScene 
+        <UnicornScene 
           production={true} 
           projectId="cbmTT38A0CcuYxeiyj5H" 
           width={width} 
           height={height}
-          fallbackGradient={{
-            from: 'from-purple-900/30',
-            via: 'via-blue-900/30',
-            to: 'to-indigo-900/40'
-          }}
         />
       </div>
       <div className="relative z-10">

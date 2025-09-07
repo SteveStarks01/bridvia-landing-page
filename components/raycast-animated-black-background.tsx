@@ -1,6 +1,6 @@
 import { cn } from "@/lib/utils";
 import { useState, useEffect } from "react";
-import SafeUnicornScene from "./safe-unicorn-scene";
+import { UnicornScene } from '@unicorn-studio/react';
 
 export const useWindowSize = () => {
   const [windowSize, setWindowSize] = useState({
@@ -29,19 +29,16 @@ export const useWindowSize = () => {
 };
 
 export const Component = () => {
-
   const { width, height } = useWindowSize();
 
   return (
     <div className={cn("flex flex-col items-center")}>
-        <SafeUnicornScene 
-        production={true} projectId="erpu4mAlEe8kmhaGKYe9" width={width} height={height}
-        fallbackGradient={{
-          from: 'from-gray-900',
-          via: 'via-black',
-          to: 'to-gray-800'
-        }}
-        />
+      <UnicornScene 
+        production={true} 
+        projectId="erpu4mAlEe8kmhaGKYe9" 
+        width={width} 
+        height={height}
+      />
     </div>
   );
 };
