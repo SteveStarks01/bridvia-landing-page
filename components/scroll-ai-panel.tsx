@@ -1,79 +1,79 @@
 "use client"
 
-import { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { MorphPanel } from "@/components/ai-input";
-import { X } from "lucide-react";
+import { useState, useEffect } from "react"
+import { motion, AnimatePresence } from "framer-motion"
+import { MorphPanel } from "@/components/ai-input"
+import { X } from "lucide-react"
 
 interface ScrollAIPanelProps {
-  heroSectionSelector?: string;
-  userLocation?: 'main' | 'bridvia-connect';
+  heroSectionSelector?: string
+  userLocation?: 'main' | 'bridvia-connect'
 }
 
 export default function ScrollAIPanel({ heroSectionSelector = ".hero-section", userLocation = 'main' }: ScrollAIPanelProps) {
-  const [isVisible, setIsVisible] = useState(false);
-  const [isMobile, setIsMobile] = useState(false);
-  const [isFullScreen, setIsFullScreen] = useState(false);
+  const [isVisible, setIsVisible] = useState(false)
+  const [isMobile, setIsMobile] = useState(false)
+  const [isFullScreen, setIsFullScreen] = useState(false)
 
   useEffect(() => {
     // Check if device is mobile
     const checkIsMobile = () => {
-      const userAgent = navigator.userAgent || navigator.vendor || (window as any).opera;
-      const isMobileUA = /android|iphone|ipad|ipod|blackberry|iemobile|opera mini/i.test(userAgent.toLowerCase());
-      const isSmallScreen = window.innerWidth <= 768;
-      setIsMobile(isMobileUA || isSmallScreen);
-    };
+      const userAgent = navigator.userAgent || navigator.vendor || (window as any).opera
+      const isMobileUA = /android|iphone|ipad|ipod|blackberry|iemobile|opera mini/i.test(userAgent.toLowerCase())
+      const isSmallScreen = window.innerWidth <= 768
+      setIsMobile(isMobileUA || isSmallScreen)
+    }
     
-    checkIsMobile();
-    window.addEventListener('resize', checkIsMobile);
+    checkIsMobile()
+    window.addEventListener('resize', checkIsMobile)
 
     const handleScroll = () => {
       // For main page, check if we've scrolled past the NewsLetter component (which is the first section)
       // For bridvia-connect page, check if we've scrolled past the Hero component
       const firstSection = document.querySelector('[data-first-section]') || 
                           document.querySelector('section') ||
-                          document.body.firstElementChild;
+                          document.body.firstElementChild
       
       if (firstSection) {
-        const rect = firstSection.getBoundingClientRect();
+        const rect = firstSection.getBoundingClientRect()
         // Show when the first section is no longer fully visible (scrolled past it)
-        const shouldShow = rect.bottom <= window.innerHeight * 0.8;
-        setIsVisible(shouldShow);
+        const shouldShow = rect.bottom <= window.innerHeight * 0.8
+        setIsVisible(shouldShow)
       }
-    };
+    }
 
     // Check initial scroll position
-    handleScroll();
+    handleScroll()
     
     // Add scroll listener with throttling for better performance
-    let timeoutId: NodeJS.Timeout;
+    let timeoutId: NodeJS.Timeout
     const throttledHandleScroll = () => {
-      clearTimeout(timeoutId);
-      timeoutId = setTimeout(handleScroll, 16); // ~60fps
-    };
+      clearTimeout(timeoutId)
+      timeoutId = setTimeout(handleScroll, 16) // ~60fps
+    }
     
-    window.addEventListener('scroll', throttledHandleScroll, { passive: true });
+    window.addEventListener('scroll', throttledHandleScroll, { passive: true })
     
     return () => {
-      window.removeEventListener('scroll', throttledHandleScroll);
-      window.removeEventListener('resize', checkIsMobile);
-      clearTimeout(timeoutId);
-    };
-  }, []);
+      window.removeEventListener('scroll', throttledHandleScroll)
+      window.removeEventListener('resize', checkIsMobile)
+      clearTimeout(timeoutId)
+    }
+  }, [])
 
   const handleMobileClick = () => {
     if (isMobile) {
-      setIsFullScreen(true);
+      setIsFullScreen(true)
       // Prevent body scroll when modal is open
-      document.body.style.overflow = 'hidden';
+      document.body.style.overflow = 'hidden'
     }
-  };
+  }
 
   const handleCloseFullScreen = () => {
-    setIsFullScreen(false);
+    setIsFullScreen(false)
     // Re-enable body scroll
-    document.body.style.overflow = 'unset';
-  };
+    document.body.style.overflow = 'unset'
+  }
 
   // Mobile Full-Screen Modal
   if (isMobile && isFullScreen) {
@@ -122,7 +122,7 @@ export default function ScrollAIPanel({ heroSectionSelector = ".hero-section", u
           </motion.div>
         </motion.div>
       </AnimatePresence>
-    );
+    )
   }
 
   return (
@@ -152,9 +152,16 @@ export default function ScrollAIPanel({ heroSectionSelector = ".hero-section", u
         visibility: isVisible ? 'visible' : 'hidden'
       }}
     >
-      <div onClick={handleMobileClick}>
+      <div 
+        onClick={isMobile ? handleMobileClick : undefined}
+        className={isMobile ? "cursor-pointer inline-block" : ""}
+        style={{
+          width: 'fit-content',
+          height: 'fit-content'
+        }}
+      >
         <MorphPanel userLocation={userLocation} />
       </div>
     </motion.div>
-  );
+  )
 }
