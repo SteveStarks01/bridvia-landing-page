@@ -3,7 +3,7 @@ import { motion } from "framer-motion"
 import Link from "next/link"
 import { ArrowRight, Users, Target, TrendingUp, UserCheck, Sparkles } from "lucide-react"
 import { useState, useEffect } from "react"
-import UnicornScene from "unicornstudio-react"
+import SafeUnicornScene from "./safe-unicorn-scene"
 import { cn } from "@/lib/utils"
 
 // Hook for window size
@@ -67,11 +67,16 @@ const AnimatedBlueBackground = ({ children, className }: { children: React.React
       <div className="absolute inset-0">
         {isClient && isMounted ? (
           <>
-            <UnicornScene 
+            <SafeUnicornScene 
               production={true} 
               projectId="ed7SJMvTJEVxfqzypOOQ" 
               width={width} 
-              height={height} 
+              height={height}
+              fallbackGradient={{
+                from: 'from-[#106861]',
+                via: 'via-[#104661]', 
+                to: 'to-[#0d4449]'
+              }}
             />
             {/* Brand color overlay to blend with teal theme */}
             <div className="absolute inset-0 bg-gradient-to-br from-[#106861]/25 via-transparent to-[#0d4449]/30 mix-blend-overlay" />

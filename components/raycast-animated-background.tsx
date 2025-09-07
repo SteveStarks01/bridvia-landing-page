@@ -1,7 +1,7 @@
 "use client"
 import { cn } from "@/lib/utils";
 import { useState, useEffect } from "react";
-import UnicornScene from "unicornstudio-react";
+import SafeUnicornScene from "./safe-unicorn-scene";
 
 export const useWindowSize = () => {
   const [windowSize, setWindowSize] = useState({
@@ -47,11 +47,16 @@ export const Component = () => {
 
   return (
     <div className={cn("flex flex-col items-center")}>
-      <UnicornScene 
+      <SafeUnicornScene 
         production={true} 
         projectId="cbmTT38A0CcuYxeiyj5H" 
         width={width} 
-        height={height} 
+        height={height}
+        fallbackGradient={{
+          from: 'from-purple-900/30',
+          via: 'via-blue-900/30',
+          to: 'to-indigo-900/40'
+        }}
       />
     </div>
   );
@@ -112,11 +117,16 @@ export const RaycastBackground = ({
   return (
     <div className={cn("relative overflow-hidden", className)} style={{ height }}>
       <div className="absolute inset-0">
-        <UnicornScene 
+        <SafeUnicornScene 
           production={true} 
           projectId="cbmTT38A0CcuYxeiyj5H" 
           width={width} 
-          height={height} 
+          height={height}
+          fallbackGradient={{
+            from: 'from-purple-900/30',
+            via: 'via-blue-900/30',
+            to: 'to-indigo-900/40'
+          }}
         />
       </div>
       <div className="relative z-10">

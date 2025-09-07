@@ -1,7 +1,7 @@
 "use client"
 import { motion } from "framer-motion"
 import { useState, useEffect } from "react"
-import UnicornScene from "unicornstudio-react"
+import SafeUnicornScene from "./safe-unicorn-scene"
 import { cn } from "@/lib/utils"
 import { Lock, Sparkles } from "lucide-react"
 
@@ -65,11 +65,16 @@ const AnimatedBlackBackground = ({ children, className }: { children: React.Reac
       {/* Animated Background */}
       <div className="absolute inset-0">
         {isClient && isMounted ? (
-          <UnicornScene 
+          <SafeUnicornScene 
             production={true} 
             projectId="erpu4mAlEe8kmhaGKYe9" 
             width={width} 
-            height={height} 
+            height={height}
+            fallbackGradient={{
+              from: 'from-[#0d4449]',
+              via: 'via-[#0a3d35]', 
+              to: 'to-black'
+            }}
           />
         ) : (
           <FallbackGradient />

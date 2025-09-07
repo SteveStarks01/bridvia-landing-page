@@ -3,31 +3,35 @@
 ## Platform Overview
 
 ### Bridvia Ecosystem
-**Mission**: Building infrastructure that connects talent with opportunity, addressing the gap between education and industry readiness.
+**Mission**: Building infrastructure that connects talent with opportunity, addressing the gap between education and industry readiness through **structured internship programs**.
 
 **Core Problem**: There's a significant disconnect between educational outcomes and industry requirements. Students graduate with theoretical knowledge but lack practical, hands-on experience that employers value.
 
-**Solution**: Bridvia provides structured, meaningful internship programs that bridge this gap through:
-- Real-world project experience
-- Mentorship from industry professionals  
-- Skills development aligned with market demands
-- Direct pathways to employment opportunities
+**Solution**: Bridvia provides structured, meaningful **internship programs** that bridge this gap through:
+- Real-world project experience during **internships**
+- Mentorship from industry professionals throughout **internship programs**  
+- Skills development aligned with market demands via **internship experiences**
+- Direct pathways to employment readiness through **internship completion**
+
+**Important Specialization**: Bridvia focuses exclusively on **internship opportunities**. We do not provide job placement services or full-time employment connections. Our mission is to prepare individuals for future career success through comprehensive **internship experiences**.
 
 ### BridviaConnect (Phase 1)
-**Focus**: Internship opportunities specifically
+**Focus**: **Internship opportunities** specifically
 **Target Audiences**:
-- Recent graduates seeking practical experience
-- Career switchers looking to transition industries
-- Certification completers wanting hands-on application
-- Professionals seeking to gain experience in new areas
-- Companies of all sizes looking for future talent
+- Recent graduates seeking practical experience through **internships**
+- Career switchers looking to transition industries via **internship programs**
+- Certification completers wanting hands-on application through **internships**
+- Professionals seeking to gain experience in new areas through specialized **internships**
+- Companies of all sizes looking for future talent through **internship partnerships**
 
 **Key Features**:
-- Structured internship programs with clear learning objectives
-- Quality partnerships with reputable companies
-- Mentorship and career development support
-- Focus on future-ready skills (technical and soft skills)
-- Bridge between education and industry
+- Structured **internship programs** with clear learning objectives
+- Quality partnerships with reputable companies for **internship experiences**
+- Mentorship and career development support throughout **internship journeys**
+- Focus on future-ready skills (technical and soft skills) developed during **internships**
+- Bridge between education and industry through **internship experiences**
+
+**Important Note**: BridviaConnect specializes in **internship placements** to prepare individuals for future employment success, not direct job placements.
 
 ### Platform Architecture
 **Technology Stack**:

@@ -186,6 +186,7 @@ interface ContextShape {
   showResponse: boolean
   conversationHistory: Array<{role: string, content: string}>
   userLocation: 'main' | 'bridvia-connect'
+  isMobileFullScreen?: boolean
   triggerOpen: () => void
   triggerClose: () => void
   askNewQuestion: () => void
@@ -194,7 +195,7 @@ interface ContextShape {
 const FormContext = React.createContext({} as ContextShape)
 const useFormContext = () => React.useContext(FormContext)
 
-export function MorphPanel({ userLocation }: { userLocation?: 'main' | 'bridvia-connect' }) {
+export function MorphPanel({ userLocation, isMobileFullScreen, onClose }: { userLocation?: 'main' | 'bridvia-connect', isMobileFullScreen?: boolean, onClose?: () => void }) {
   const wrapperRef = React.useRef<HTMLDivElement>(null)
   const textareaRef = React.useRef<HTMLTextAreaElement | null>(null)
   
@@ -375,21 +376,32 @@ export function MorphPanel({ userLocation }: { userLocation?: 'main' | 'bridvia-
   React.useEffect(() => {
     function clickOutsideHandler(e: MouseEvent) {
       if (wrapperRef.current && !wrapperRef.current.contains(e.target as Node) && showForm) {
-        triggerClose()
+        if (isMobileFullScreen && onClose) {
+          onClose();
+        } else {
+          triggerClose();
+        }
       }
     }
     document.addEventListener("mousedown", clickOutsideHandler)
     return () => document.removeEventListener("mousedown", clickOutsideHandler)
-  }, [showForm, triggerClose])
+  }, [showForm, triggerClose, isMobileFullScreen, onClose])
 
   const ctx = React.useMemo(
-    () => ({ showForm, successFlag, isThinking, response, showResponse, conversationHistory, userLocation: currentLocation, triggerOpen, triggerClose, askNewQuestion }),
-    [showForm, successFlag, isThinking, response, showResponse, conversationHistory, currentLocation, triggerOpen, triggerClose, askNewQuestion]
+    () => ({ showForm, successFlag, isThinking, response, showResponse, conversationHistory, userLocation: currentLocation, isMobileFullScreen, triggerOpen, triggerClose, askNewQuestion }),
+    [showForm, successFlag, isThinking, response, showResponse, conversationHistory, currentLocation, isMobileFullScreen, triggerOpen, triggerClose, askNewQuestion]
   )
 
   // Calculate dynamic dimensions based on state with mobile responsiveness
   const getWidth = () => {
     const isMobile = typeof window !== 'undefined' && window.innerWidth <= 640;
+    
+    // If it's mobile full-screen, use optimized width
+    if (isMobileFullScreen) {
+      const availableWidth = typeof window !== 'undefined' ? window.innerWidth : 400;
+      return Math.min(availableWidth - 32, 400);
+    }
+    
     if (showResponse) return isMobile ? Math.min(window.innerWidth - 32, 380) : 420
     if (showForm) return isMobile ? Math.min(window.innerWidth - 32, 320) : FORM_WIDTH
     if (isThinking) return isMobile ? Math.min(window.innerWidth - 32, 260) : 280
@@ -398,6 +410,16 @@ export function MorphPanel({ userLocation }: { userLocation?: 'main' | 'bridvia-
   
   const getHeight = () => {
     const isMobile = typeof window !== 'undefined' && window.innerWidth <= 640;
+    
+    // If it's mobile full-screen, use optimized height management
+    if (isMobileFullScreen) {
+      const availableHeight = typeof window !== 'undefined' ? window.innerHeight : 500;
+      if (showResponse) return Math.min(availableHeight * 0.75, 450);
+      if (showForm) return Math.min(availableHeight * 0.6, 300);
+      if (isThinking) return 120;
+      return 44;
+    }
+    
     if (showResponse) return isMobile ? Math.min(window.innerHeight - 120, 300) : 340
     if (showForm) return isMobile ? Math.min(window.innerHeight - 120, 180) : FORM_HEIGHT
     if (isThinking) return 120
@@ -406,6 +428,17 @@ export function MorphPanel({ userLocation }: { userLocation?: 'main' | 'bridvia-
 
   const getContainerDimensions = () => {
     const isMobile = typeof window !== 'undefined' && window.innerWidth <= 640;
+    
+    // If it's mobile full-screen, use optimized full screen dimensions
+    if (isMobileFullScreen) {
+      const availableHeight = typeof window !== 'undefined' ? window.innerHeight : 500;
+      const availableWidth = typeof window !== 'undefined' ? window.innerWidth : 400;
+      return {
+        width: Math.min(availableWidth - 32, 420),
+        height: Math.min(availableHeight * 0.8, 550) // Use 80% of screen height max
+      }
+    }
+    
     if (isMobile) {
       return {
         width: Math.min(window.innerWidth - 16, 400),
@@ -421,19 +454,24 @@ export function MorphPanel({ userLocation }: { userLocation?: 'main' | 'bridvia-
   const containerDimensions = getContainerDimensions();
 
   return (
-    <div className="flex items-center justify-center px-2 sm:px-0" style={containerDimensions}>
+    <div className={cn(
+      "flex items-center justify-center",
+      isMobileFullScreen ? "w-full h-full px-4 py-6" : "px-2 sm:px-0"
+    )} style={isMobileFullScreen ? { minHeight: '100%' } : containerDimensions}>
       <motion.div
         ref={wrapperRef}
         data-panel
         className={cx(
-          "bg-background relative bottom-8 z-3 flex flex-col items-center overflow-hidden border",
-          "max-sm:bottom-2 max-sm:mx-2 max-sm:rounded-lg"
+          "bg-background relative z-3 flex flex-col items-center overflow-hidden border shadow-xl",
+          isMobileFullScreen 
+            ? "w-full rounded-3xl backdrop-blur-xl border-white/20" 
+            : "bottom-8 max-sm:bottom-2 max-sm:mx-2 max-sm:rounded-lg"
         )}
         initial={false}
         animate={{
           width: getWidth(),
           height: getHeight(),
-          borderRadius: showForm || showResponse ? 14 : 20,
+          borderRadius: (showForm || showResponse) ? (isMobileFullScreen ? 24 : 14) : (isMobileFullScreen ? 24 : 20),
         }}
         transition={{
           type: "spring",
@@ -521,7 +559,7 @@ const FORM_WIDTH = 360
 const FORM_HEIGHT = 200
 
 function InputForm({ ref, onSuccess }: { ref: React.Ref<HTMLTextAreaElement>; onSuccess: (message: string) => void }) {
-  const { triggerClose, showForm, userLocation } = useFormContext()
+  const { triggerClose, showForm, userLocation, isMobileFullScreen } = useFormContext()
   const [message, setMessage] = React.useState("")
   const textareaRef = React.useRef<HTMLTextAreaElement>(null)
 
@@ -530,6 +568,15 @@ function InputForm({ ref, onSuccess }: { ref: React.Ref<HTMLTextAreaElement>; on
   // Mobile responsive form dimensions
   const getFormDimensions = () => {
     const isMobile = typeof window !== 'undefined' && window.innerWidth <= 640;
+    
+    // For mobile full-screen, use optimized dimensions
+    if (isMobileFullScreen && typeof window !== 'undefined') {
+      return {
+        width: Math.min(window.innerWidth - 64, 380),
+        height: Math.min(window.innerHeight * 0.5, 250)
+      }
+    }
+    
     if (isMobile) {
       return {
         width: Math.min(window.innerWidth - 32, 320),
@@ -855,11 +902,20 @@ function FormattedResponse({ text }: { text: string }) {
 }
 
 function ResponseDisplay() {
-  const { showResponse, response, triggerClose, askNewQuestion } = useFormContext()
+  const { showResponse, response, triggerClose, askNewQuestion, isMobileFullScreen } = useFormContext()
   
   // Mobile responsive response dimensions
   const getResponseDimensions = () => {
     const isMobile = typeof window !== 'undefined' && window.innerWidth <= 640;
+    
+    // For mobile full-screen, use optimized dimensions
+    if (isMobileFullScreen && typeof window !== 'undefined') {
+      return {
+        width: Math.min(window.innerWidth - 64, 400),
+        height: Math.min(window.innerHeight * 0.65, 400)
+      }
+    }
+    
     if (isMobile) {
       return {
         width: Math.min(window.innerWidth - 32, 380),

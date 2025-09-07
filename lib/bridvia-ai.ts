@@ -51,43 +51,47 @@ class BridviaAI {
 # Bridvia Platform Knowledge Base
 
 ## About Bridvia Ecosystem
-Bridvia is building the infrastructure that connects talent with opportunity, addressing the critical gap between education and industry readiness. Our mission is to empower the next generation by creating pathways for sustainable career growth through hands-on experiences.
+Bridvia is building the infrastructure that connects talent with opportunity, addressing the critical gap between education and industry readiness. Our mission is to empower the next generation by creating pathways for sustainable career growth through hands-on **internship experiences**.
 
-**Core Vision**: To reshape career development by bridging the gap between education and industry readiness, making graduates more employable through practical skills and real-world experience.
+**Core Vision**: To reshape career development by bridging the gap between education and industry readiness, making graduates more employable through practical **internship opportunities** and real-world experience.
 
 **Core Problem We Solve**: There's a significant disconnect between educational outcomes and industry requirements. Students graduate with theoretical knowledge but lack practical, hands-on experience that employers value.
 
-**Our Solution**: Structured, meaningful programs that provide:
+**Our Solution**: Structured, meaningful **internship programs** that provide:
 - Real-world project experience with industry-standard tools
 - Mentorship from experienced industry professionals
 - Skills development aligned with current market demands
-- Direct pathways to employment opportunities
-- Professional networking and career clarity
+- Direct pathways to employment readiness through internship completion
+- Professional networking and career clarity through structured internship experiences
+
+**Important Note**: Bridvia specializes exclusively in **internship opportunities**. We do not offer job placements or full-time employment connections. Our focus is on preparing individuals for the workforce through comprehensive internship experiences that build the skills and experience needed for future career success.
 
 ## BridviaConnect (Phase 1)
-BridviaConnect is Phase 1 of our ecosystem, specifically focused on internship opportunities. It's designed to connect students, recent graduates, career switchers, certification completers, and professionals with companies offering structured internship programs.
+BridviaConnect is Phase 1 of our ecosystem, specifically focused on **internship opportunities**. It's designed to connect students, recent graduates, career switchers, certification completers, and professionals with companies offering structured **internship programs**.
 
 **Target Audiences**:
-- Recent graduates seeking practical experience to enhance employability
-- Career switchers looking to transition industries with hands-on experience
-- Certification completers wanting real-world application of their knowledge
-- Professionals seeking experience in new areas or technologies
-- Companies of all sizes looking for motivated future talent
+- Recent graduates seeking practical experience to enhance employability through internships
+- Career switchers looking to transition industries with hands-on internship experience
+- Certification completers wanting real-world application of their knowledge through internships
+- Professionals seeking experience in new areas or technologies via specialized internships
+- Companies of all sizes looking for motivated future talent through internship partnerships
 
 **Key Features & Benefits**:
-- Structured internship programs with clear learning objectives
-- Quality partnerships with reputable companies committed to meaningful learning
-- Mentorship and career development support throughout the journey
-- Focus on future-ready skills (both technical and soft skills)
-- Practical work experience with real projects and deliverables
-- Professional network building and industry exposure
-- Increased employability through portfolio building
-- Career clarity through real-world application and feedback
+- Structured **internship programs** with clear learning objectives
+- Quality partnerships with reputable companies committed to meaningful internship experiences
+- Mentorship and career development support throughout the internship journey
+- Focus on future-ready skills (both technical and soft skills) developed through internships
+- Practical work experience with real projects and deliverables during internships
+- Professional network building and industry exposure through internship connections
+- Increased employability through portfolio building during internship projects
+- Career clarity through real-world application and feedback in internship settings
 
 **How It Works**:
-1. Apply for opportunities that match your interests and career goals
-2. Get matched with suitable companies and structured programs
-3. Start your internship journey with full mentorship and learning support
+1. Apply for **internship opportunities** that match your interests and career goals
+2. Get matched with suitable companies and structured **internship programs**
+3. Start your **internship journey** with full mentorship and learning support
+
+**Important Clarification**: BridviaConnect focuses exclusively on **internship placements**, not job placements. Our goal is to prepare individuals for future employment success through comprehensive internship experiences.
 
 ## Platform Values & Differentiators
 **What Makes Bridvia Different**:
@@ -110,7 +114,9 @@ Beyond BridviaConnect, we're developing the next evolution of our platform that 
 ## Current Development Status
 We're actively developing partnerships with leading companies and curating high-quality opportunities. Our team is working diligently to ensure that when we launch each phase, it meets our high standards for meaningful career development experiences.
 
-**Important Note**: Specific internship opportunities, company partnerships, and program details are currently being finalized. We're committed to quality over speed in our rollout.
+**Important Note**: Specific **internship opportunities**, company partnerships, and program details are currently being finalized. We're committed to quality over speed in our rollout of internship programs.
+
+**Our Specialization**: Bridvia exclusively focuses on **internship opportunities** to help individuals build the skills, experience, and professional networks needed for future career success. We do not provide job placement services or full-time employment connections.
 
 ## Contact & Support
 **Primary Contact**: info@bridvia.com
@@ -139,14 +145,17 @@ Personality & Communication Style:
 - Share insights about the vision and impact of what Bridvia is building
 - When you don't have specific details, be transparent but redirect positively
 
-Key Behavioral Guidelines:
-1. **Vision-Focused**: Emphasize the transformative potential of bridging education and industry
-2. **Human-Centered**: Always consider the person's career journey and aspirations
-3. **Solution-Oriented**: Focus on how Bridvia addresses real career development challenges
-4. **Transparency**: Be honest about development status while maintaining enthusiasm
-5. **Professional Development**: Offer valuable career insights even beyond platform specifics
+Behavioral Guidelines:
+1. **Vision-Focused**: Emphasize the transformative potential of bridging education and industry through internship experiences
+2. **Human-Centered**: Always consider the person's career journey and aspirations for internship opportunities
+3. **Solution-Oriented**: Focus on how Bridvia addresses real career development challenges through structured internships
+4. **Transparency**: Be honest about development status while maintaining enthusiasm about internship programs
+5. **Professional Development**: Offer valuable career insights focused on internship experiences and skill building
 6. **No Geographic References**: Keep all messaging geographically neutral
 7. **Warm Referrals**: When directing to contact info, do so warmly and helpfully
+8. **Internship Focus**: Clearly emphasize that Bridvia specializes in internship opportunities, not full-time job placements
+9. **Skill Development**: Highlight how internships prepare individuals for future career success
+10. **Industry Readiness**: Focus on building practical skills through hands-on internship experiences
 
 Development Status Messaging:
 When asked about specific opportunities, companies, or program details, respond professionally:
@@ -344,6 +353,11 @@ Feel free to paint the bigger picture of what we're building while being transpa
   private generateMockResponse(message: string, userLocation: 'main' | 'bridvia-connect'): string {
     const lowerMessage = message.toLowerCase();
     
+    // Job-related questions - Redirect to internship focus
+    if (lowerMessage.includes('job') || lowerMessage.includes('employment') || lowerMessage.includes('hire') || lowerMessage.includes('position') || lowerMessage.includes('career opportunities')) {
+      return "I appreciate your interest! I want to be crystal clear about what Bridvia offers: we specialize exclusively in **internship opportunities**, not job placements or full-time employment connections. Our mission is to prepare individuals for future career success through comprehensive, structured **internship experiences**. These **internships** provide the hands-on experience, professional skills, and industry connections that make you highly attractive to future employers. Think of us as your stepping stone to career readiness - we focus on building your foundation through meaningful **internship programs** so you'll be well-prepared when you do pursue full-time positions elsewhere. Our goal is helping you become the candidate that employers want to hire through the skills and experience gained during your **internship journey** with us!";
+    }
+
     // Greeting and introduction responses
     if (lowerMessage.includes('hello') || lowerMessage.includes('hi') || lowerMessage.match(/^(hey|what's up|good morning|good afternoon)\b/)) {
       const welcomes = [
@@ -356,21 +370,21 @@ Feel free to paint the bigger picture of what we're building while being transpa
 
     // About Bridvia - Vision-focused responses
     if (lowerMessage.includes('what is bridvia') || lowerMessage.includes('about bridvia') || lowerMessage.includes('tell me about')) {
-      return "Bridvia is on a mission to reshape how people develop their careers! We're building infrastructure that connects talent with opportunity, specifically addressing that frustrating gap between education and what the industry actually needs. Think of us as career development revolutionaries - we believe that hands-on, practical experience is the key to unlocking someone's potential. Our vision is to create pathways where learning happens through real work, mentorship comes from industry pros, and every experience builds toward sustainable career growth. It's about empowering the next generation with the tools and experiences they need to thrive in tomorrow's workplace.";
+      return "Bridvia is on a mission to reshape how people develop their careers through **internship opportunities**! We're building infrastructure that connects talent with opportunity, specifically addressing that frustrating gap between education and what the industry actually needs. Think of us as career development revolutionaries - we believe that hands-on, practical experience through structured **internships** is the key to unlocking someone's potential. Our vision is to create pathways where learning happens through real work during internships, mentorship comes from industry pros, and every internship experience builds toward sustainable career growth. It's about empowering the next generation with the tools and experiences they need to thrive in tomorrow's workplace. **Important note**: We specialize exclusively in internship opportunities, not job placements - our focus is on preparing you for future career success through comprehensive internship experiences.";
     }
 
     // BridviaConnect specific responses
     if (lowerMessage.includes('bridviaconnect') || lowerMessage.includes('phase 1') || lowerMessage.includes('internship')) {
       if (userLocation === 'bridvia-connect') {
-        return "BridviaConnect is where our vision comes to life! It's Phase 1 of our ecosystem, and honestly, I'm excited about what we're building here. We're creating structured internship experiences that aren't just 'fetch coffee' roles - these are meaningful programs with clear learning objectives, real projects, and mentorship from professionals who genuinely want to see you succeed. The idea is to bridge that gap between classroom theory and workplace reality. Every internship is carefully curated to ensure you're gaining skills that actually matter in today's job market while building relationships that can shape your career. It's practical career development at its finest!";
+        return "BridviaConnect is where our vision comes to life! It's Phase 1 of our ecosystem, and honestly, I'm excited about what we're building here. We're creating structured **internship experiences** that aren't just 'fetch coffee' roles - these are meaningful **internship programs** with clear learning objectives, real projects, and mentorship from professionals who genuinely want to see you succeed. The idea is to bridge that gap between classroom theory and workplace reality through hands-on **internships**. Every **internship opportunity** is carefully curated to ensure you're gaining skills that actually matter in today's job market while building relationships that can shape your career. It's practical career development at its finest! **Important**: We focus exclusively on **internship placements** to prepare you for future employment success, not direct job placements.";
       } else {
-        return "BridviaConnect represents Phase 1 of our vision - and it's pretty exciting! We're focused on creating structured internship opportunities that go way beyond traditional programs. Think meaningful projects, dedicated mentorship, and real skill development with companies who are genuinely invested in your growth. It's designed for anyone looking to bridge the gap between education and industry readiness - whether you're a recent graduate, career switcher, or professional exploring new areas. The goal is to give you hands-on experience that actually prepares you for what employers are looking for.";
+        return "BridviaConnect represents Phase 1 of our vision - and it's pretty exciting! We're focused on creating structured **internship opportunities** that go way beyond traditional programs. Think meaningful projects, dedicated mentorship, and real skill development with companies who are genuinely invested in your growth through **internships**. It's designed for anyone looking to bridge the gap between education and industry readiness - whether you're a recent graduate, career switcher, or professional exploring new areas through **internship experiences**. The goal is to give you hands-on experience through **internships** that actually prepares you for what employers are looking for. **Note**: We specialize in **internship programs**, not job placements - our mission is building your readiness for future career success.";
       }
     }
 
     // Target audience and who can benefit
     if (lowerMessage.includes('who') && (lowerMessage.includes('can use') || lowerMessage.includes('is this for') || lowerMessage.includes('target'))) {
-      return "Bridvia is designed for anyone looking to bridge the gap between where they are and where they want to be in their career! This includes recent graduates who have the knowledge but need practical experience, career switchers who want to transition industries with confidence, professionals looking to gain experience in new areas or technologies, and certification completers who want to apply what they've learned in real-world settings. We also work with companies of all sizes who are committed to meaningful talent development. Really, if you're someone who believes in learning through doing and wants to build a career through hands-on experience, Bridvia is for you.";
+      return "Bridvia is designed for anyone looking to bridge the gap between where they are and where they want to be in their career through **internship experiences**! This includes recent graduates who have the knowledge but need practical experience through **internships**, career switchers who want to transition industries with confidence via **internship programs**, professionals looking to gain experience in new areas or technologies through specialized **internships**, and certification completers who want to apply what they've learned in real-world **internship settings**. We also work with companies of all sizes who are committed to meaningful talent development through **internship partnerships**. Really, if you're someone who believes in learning through doing and wants to build a career foundation through hands-on **internship experience**, Bridvia is for you. **Important**: We focus on **internship opportunities** to build your skills for future career success, not direct job placements.";
     }
 
     // How it works
@@ -380,7 +394,7 @@ Feel free to paint the bigger picture of what we're building while being transpa
 
     // Benefits and advantages
     if (lowerMessage.includes('benefit') || lowerMessage.includes('advantage') || lowerMessage.includes('why choose') || lowerMessage.includes('what makes')) {
-      return "What makes Bridvia special is our focus on **meaningful** career development. You're not just gaining experience - you're building a foundation for long-term success. The benefits include practical work experience with real projects and industry-standard tools, professional mentorship from people who genuinely care about your growth, increased employability through portfolio building and skill development, career clarity through real-world application and feedback, and access to professional networks that can open doors throughout your career. But beyond the practical benefits, it's about confidence - knowing that you have the hands-on experience and skills that employers value in today's competitive market.";
+      return "What makes Bridvia special is our focus on **meaningful internship experiences** that build your career foundation. You're not just gaining experience - you're building readiness for long-term success through structured **internship programs**. The benefits include practical work experience with real projects and industry-standard tools during **internships**, professional mentorship from people who genuinely care about your growth throughout your **internship journey**, increased employability through portfolio building and skill development via **internship projects**, career clarity through real-world application and feedback in **internship settings**, and access to professional networks that can open doors throughout your career after completing **internships** with us. But beyond the practical benefits, it's about confidence - knowing that you have the hands-on experience and skills that employers value, gained through comprehensive **internship experiences** that prepare you for whatever career path you choose to pursue next.";
     }
 
     // Companies and partnerships
