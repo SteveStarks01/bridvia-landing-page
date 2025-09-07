@@ -266,7 +266,7 @@ export function MorphPanel({ userLocation }: { userLocation?: 'main' | 'bridvia-
       let aiResponse = data.response || data.fallbackResponse || 'I apologize, but I encountered an issue. Please contact us at info@bridvia.com.'
       
       // Filter out thinking process from AI response
-      aiResponse = aiResponse.replace(/◁think▷.*?◁\/think▷/gs, '').trim()
+      aiResponse = aiResponse.replace(/◁think▷[\s\S]*?◁\/think▷/g, '').trim()
       
       // Add AI response to conversation history
       const updatedHistory = [...newHistory, { role: 'assistant', content: aiResponse }]
@@ -283,7 +283,7 @@ export function MorphPanel({ userLocation }: { userLocation?: 'main' | 'bridvia-
       let fallbackResponse = `I understand you're asking about "${userMessage.substring(0, 50)}${userMessage.length > 50 ? '...' : ''}". I apologize, but I'm currently unable to process your request. Please contact us at info@bridvia.com for assistance with your inquiry about our platform and services.`
       
       // Filter out any thinking process that might be in fallback responses too
-      fallbackResponse = fallbackResponse.replace(/◁think▷.*?◁\/think▷/gs, '').trim()
+      fallbackResponse = fallbackResponse.replace(/◁think▷[\s\S]*?◁\/think▷/g, '').trim()
       
       const updatedHistory = [...newHistory, { role: 'assistant', content: fallbackResponse }]
       setConversationHistory(updatedHistory)
