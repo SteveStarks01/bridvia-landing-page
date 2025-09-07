@@ -387,28 +387,47 @@ export function MorphPanel({ userLocation }: { userLocation?: 'main' | 'bridvia-
     [showForm, successFlag, isThinking, response, showResponse, conversationHistory, currentLocation, triggerOpen, triggerClose, askNewQuestion]
   )
 
-  // Calculate dynamic dimensions based on state
+  // Calculate dynamic dimensions based on state with mobile responsiveness
   const getWidth = () => {
-    if (showResponse) return 420
-    if (showForm) return FORM_WIDTH
-    if (isThinking) return 280 // Fixed width for thinking state
+    const isMobile = typeof window !== 'undefined' && window.innerWidth <= 640;
+    if (showResponse) return isMobile ? Math.min(window.innerWidth - 32, 380) : 420
+    if (showForm) return isMobile ? Math.min(window.innerWidth - 32, 320) : FORM_WIDTH
+    if (isThinking) return isMobile ? Math.min(window.innerWidth - 32, 260) : 280
     return "auto"
   }
   
   const getHeight = () => {
-    if (showResponse) return 340
-    if (showForm) return FORM_HEIGHT
-    if (isThinking) return 120 // Fixed height for thinking state
+    const isMobile = typeof window !== 'undefined' && window.innerWidth <= 640;
+    if (showResponse) return isMobile ? Math.min(window.innerHeight - 120, 300) : 340
+    if (showForm) return isMobile ? Math.min(window.innerHeight - 120, 180) : FORM_HEIGHT
+    if (isThinking) return 120
     return 44
   }
 
+  const getContainerDimensions = () => {
+    const isMobile = typeof window !== 'undefined' && window.innerWidth <= 640;
+    if (isMobile) {
+      return {
+        width: Math.min(window.innerWidth - 16, 400),
+        height: Math.min(window.innerHeight - 100, 360)
+      }
+    }
+    return {
+      width: Math.max(FORM_WIDTH, 420),
+      height: Math.max(FORM_HEIGHT, 340)
+    }
+  }
+
+  const containerDimensions = getContainerDimensions();
+
   return (
-    <div className="flex items-center justify-center" style={{ width: Math.max(FORM_WIDTH, 420), height: Math.max(FORM_HEIGHT, 340) }}>
+    <div className="flex items-center justify-center px-2 sm:px-0" style={containerDimensions}>
       <motion.div
         ref={wrapperRef}
         data-panel
         className={cx(
-          "bg-background relative bottom-8 z-3 flex flex-col items-center overflow-hidden border max-sm:bottom-5"
+          "bg-background relative bottom-8 z-3 flex flex-col items-center overflow-hidden border",
+          "max-sm:bottom-2 max-sm:mx-2 max-sm:rounded-lg"
         )}
         initial={false}
         animate={{
@@ -508,6 +527,18 @@ function InputForm({ ref, onSuccess }: { ref: React.Ref<HTMLTextAreaElement>; on
 
   React.useImperativeHandle(ref, () => textareaRef.current!)
 
+  // Mobile responsive form dimensions
+  const getFormDimensions = () => {
+    const isMobile = typeof window !== 'undefined' && window.innerWidth <= 640;
+    if (isMobile) {
+      return {
+        width: Math.min(window.innerWidth - 32, 320),
+        height: Math.min(window.innerHeight - 120, 180)
+      }
+    }
+    return { width: FORM_WIDTH, height: FORM_HEIGHT }
+  }
+
   async function handleSubmit(e?: React.FormEvent<HTMLFormElement>) {
     e?.preventDefault()
     if (message?.trim()) {
@@ -539,11 +570,13 @@ function InputForm({ ref, onSuccess }: { ref: React.Ref<HTMLTextAreaElement>; on
     }
   }, [showForm])
 
+  const formDimensions = getFormDimensions();
+
   return (
     <form
       onSubmit={handleSubmit}
       className="absolute bottom-0"
-      style={{ width: FORM_WIDTH, height: FORM_HEIGHT, pointerEvents: showForm ? "all" : "none" }}
+      style={{ ...formDimensions, pointerEvents: showForm ? "all" : "none" }}
     >
       <AnimatePresence>
         {showForm && (
@@ -824,6 +857,20 @@ function FormattedResponse({ text }: { text: string }) {
 function ResponseDisplay() {
   const { showResponse, response, triggerClose, askNewQuestion } = useFormContext()
   
+  // Mobile responsive response dimensions
+  const getResponseDimensions = () => {
+    const isMobile = typeof window !== 'undefined' && window.innerWidth <= 640;
+    if (isMobile) {
+      return {
+        width: Math.min(window.innerWidth - 32, 380),
+        height: Math.min(window.innerHeight - 120, 300)
+      }
+    }
+    return { width: 420, height: 340 }
+  }
+  
+  const responseDimensions = getResponseDimensions();
+  
   return (
     <AnimatePresence>
       {showResponse && (
@@ -833,15 +880,15 @@ function ResponseDisplay() {
           exit={{ opacity: 0, scale: 0.9 }}
           transition={{ type: "spring", stiffness: 550 / SPEED_FACTOR, damping: 45, mass: 0.7 }}
           className="absolute bottom-0 w-full"
-          style={{ width: 420, height: 340 }}
+          style={responseDimensions}
         >
           <div className="flex flex-col h-full bg-background/95 backdrop-blur-md rounded-lg border border-border/50 shadow-lg">
             {/* Header */}
-            <div className="flex justify-between items-center p-4 border-b border-border/30">
-              <div className="flex items-center gap-3">
-                <ColorOrb dimension="24px" tones={{ base: "oklch(22.64% 0 0)" }} />
+            <div className="flex justify-between items-center p-3 sm:p-4 border-b border-border/30">
+              <div className="flex items-center gap-2 sm:gap-3">
+                <ColorOrb dimension="20px" tones={{ base: "oklch(22.64% 0 0)" }} />
                 <div>
-                  <p className="text-foreground text-sm font-medium">Brid AI</p>
+                  <p className="text-foreground text-xs sm:text-sm font-medium">Brid AI</p>
                   <p className="text-muted-foreground text-xs">Here's your answer</p>
                 </div>
               </div>
@@ -857,7 +904,7 @@ function ResponseDisplay() {
             </div>
             
             {/* Response Content */}
-            <div className="flex-1 p-4">
+            <div className="flex-1 p-3 sm:p-4">
               <motion.div
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -865,11 +912,11 @@ function ResponseDisplay() {
                 className="h-full"
               >
                 <div 
-                  className="h-full bg-gradient-to-br from-foreground/5 to-foreground/10 rounded-lg p-5 text-foreground border border-foreground/10 backdrop-blur-sm overflow-y-auto"
+                  className="h-full bg-gradient-to-br from-foreground/5 to-foreground/10 rounded-lg p-3 sm:p-5 text-foreground border border-foreground/10 backdrop-blur-sm overflow-y-auto"
                   style={{
                     scrollbarWidth: 'none',
                     msOverflowStyle: 'none',
-                    maxHeight: '160px'
+                    maxHeight: typeof window !== 'undefined' && window.innerWidth <= 640 ? '120px' : '160px'
                   }}
                 >
                   <motion.div
@@ -889,22 +936,23 @@ function ResponseDisplay() {
             </div>
             
             {/* Action Buttons */}
-            <div className="flex gap-3 p-4 pt-2 border-t border-border/20">
+            <div className="flex gap-2 sm:gap-3 p-3 sm:p-4 pt-2 border-t border-border/20">
               <button
                 onClick={askNewQuestion}
-                className="flex-1 flex items-center justify-center gap-2 px-4 py-2 bg-foreground/10 rounded-lg text-sm font-medium text-foreground transition-colors duration-200 hover:bg-foreground/15"
+                className="flex-1 flex items-center justify-center gap-1 sm:gap-2 px-3 sm:px-4 py-2 bg-foreground/10 rounded-lg text-xs sm:text-sm font-medium text-foreground transition-colors duration-200 hover:bg-foreground/15"
               >
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" className="sm:w-4 sm:h-4">
                   <path d="M12 2L2 7L12 12L22 7L12 2Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                   <path d="M2 17L12 22L22 17" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                   <path d="M2 12L12 17L22 12" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                 </svg>
-                Ask Another Question
+                <span className="hidden sm:inline">Ask Another Question</span>
+                <span className="sm:hidden">Ask Again</span>
               </button>
               
               <motion.button
                 onClick={triggerClose}
-                className="px-4 py-2 text-sm text-muted-foreground hover:text-foreground hover:bg-foreground/5 rounded-lg transition-all duration-200"
+                className="px-3 sm:px-4 py-2 text-xs sm:text-sm text-muted-foreground hover:text-foreground hover:bg-foreground/5 rounded-lg transition-all duration-200"
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
               >

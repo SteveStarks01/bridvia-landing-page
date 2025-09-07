@@ -51,9 +51,56 @@ export default function ShaderShowcase() {
     }
   }, [isMobile])
 
-  // Fallback gradient for mobile and SSR
+  // Enhanced fallback gradient with animation for mobile
   const FallbackGradient = () => (
-    <div className="absolute inset-0 w-full h-full bg-gradient-to-br from-black via-purple-900/50 to-black opacity-80" />
+    <div className="absolute inset-0 w-full h-full">
+      {/* Base gradient */}
+      <div className="absolute inset-0 bg-gradient-to-br from-black via-purple-900/50 to-black opacity-80" />
+      
+      {/* Animated overlay for mobile */}
+      <motion.div
+        className="absolute inset-0 bg-gradient-to-br from-purple-600/20 via-transparent to-blue-600/20"
+        animate={{
+          scale: [1, 1.1, 1],
+          opacity: [0.3, 0.6, 0.3],
+        }}
+        transition={{
+          duration: 4,
+          repeat: Infinity,
+          ease: "easeInOut"
+        }}
+      />
+      
+      {/* Moving gradient orbs for mobile animation */}
+      <motion.div
+        className="absolute top-1/4 left-1/4 w-96 h-96 bg-gradient-to-br from-purple-500/30 to-transparent rounded-full blur-3xl"
+        animate={{
+          x: [0, 100, 0],
+          y: [0, -50, 0],
+          opacity: [0.2, 0.4, 0.2],
+        }}
+        transition={{
+          duration: 8,
+          repeat: Infinity,
+          ease: "easeInOut"
+        }}
+      />
+      
+      <motion.div
+        className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-gradient-to-br from-blue-500/30 to-transparent rounded-full blur-3xl"
+        animate={{
+          x: [0, -80, 0],
+          y: [0, 60, 0],
+          opacity: [0.2, 0.5, 0.2],
+        }}
+        transition={{
+          duration: 6,
+          repeat: Infinity,
+          ease: "easeInOut",
+          delay: 1
+        }}
+      />
+    </div>
   )
 
   // Fallback circle for mobile and SSR
@@ -104,22 +151,29 @@ export default function ShaderShowcase() {
         </defs>
       </svg>
 
-      {/* Background Shaders - Only render on client and desktop */}
-      {isClient && isMounted && !isMobile ? (
-        <>
-          <MeshGradient
-            className="absolute inset-0 w-full h-full"
-            colors={["#000000", "#8b5cf6", "#ffffff", "#1e1b4b", "#4c1d95"]}
-            speed={0.3}
-          />
-          <MeshGradient
-            className="absolute inset-0 w-full h-full opacity-60"
-            colors={["#000000", "#ffffff", "#8b5cf6", "#000000"]}
-            speed={0.2}
-          />
-        </>
+      {/* Background Shaders - Render full shaders on desktop, animated fallback on mobile */}
+      {isClient && isMounted ? (
+        !isMobile ? (
+          // Full shader animation for desktop
+          <>
+            <MeshGradient
+              className="absolute inset-0 w-full h-full"
+              colors={["#000000", "#8b5cf6", "#ffffff", "#1e1b4b", "#4c1d95"]}
+              speed={0.3}
+            />
+            <MeshGradient
+              className="absolute inset-0 w-full h-full opacity-60"
+              colors={["#000000", "#ffffff", "#8b5cf6", "#000000"]}
+              speed={0.2}
+            />
+          </>
+        ) : (
+          // Enhanced animated fallback for mobile
+          <FallbackGradient />
+        )
       ) : (
-        <FallbackGradient />
+        // Simple fallback for SSR
+        <div className="absolute inset-0 w-full h-full bg-gradient-to-br from-black via-purple-900/50 to-black opacity-80" />
       )}
 
       <header className="relative z-20 flex items-center justify-between p-4 sm:p-6">
@@ -232,21 +286,21 @@ export default function ShaderShowcase() {
         </div>
       </header>
 
-      <main className="absolute bottom-8 left-4 sm:left-8 z-20 max-w-lg px-4 sm:px-0">
+      <main className="absolute bottom-4 sm:bottom-8 left-4 sm:left-8 z-20 max-w-lg px-2 sm:px-4 md:px-0">
         <div className="text-left">
           <div
-            className="inline-flex items-center px-3 py-1 rounded-full bg-white/5 backdrop-blur-sm mb-4 relative"
+            className="inline-flex items-center px-2 sm:px-3 py-1 rounded-full bg-white/5 backdrop-blur-sm mb-3 sm:mb-4 relative"
             style={{
               filter: "url(#glass-effect)",
             }}
           >
             <div className="absolute top-0 left-1 right-1 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent rounded-full" />
-            <Sparkles className="w-3 h-3 text-white/90 mr-2 relative z-10" />
+            <Sparkles className="w-2.5 sm:w-3 h-2.5 sm:h-3 text-white/90 mr-1.5 sm:mr-2 relative z-10" />
             <span className="text-white/90 text-xs font-light relative z-10">Building Infrastructure that Connects Talent with Opportunity</span>
           </div>
 
           {/* Main Heading */}
-          <h1 className="text-4xl sm:text-5xl md:text-6xl md:leading-16 tracking-tight font-light text-white mb-4">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl lg:leading-16 tracking-tight font-light text-white mb-3 sm:mb-4">
             <span className="font-medium italic instrument">Bridge</span> Your
             <br />
             <span className="font-light tracking-tight text-white">Career Journey</span>
@@ -259,11 +313,11 @@ export default function ShaderShowcase() {
           </p>
 
           {/* Buttons */}
-          <div className="flex items-center gap-3 sm:gap-4 flex-wrap">
-            <a href="#about" className="px-6 sm:px-8 py-3 rounded-full bg-transparent border border-white/30 text-white font-normal text-xs transition-all duration-200 hover:bg-white/10 hover:border-white/50 cursor-pointer">
+          <div className="flex items-center gap-2 sm:gap-3 md:gap-4 flex-wrap">
+            <a href="#about" className="px-4 sm:px-6 md:px-8 py-2.5 sm:py-3 rounded-full bg-transparent border border-white/30 text-white font-normal text-xs transition-all duration-200 hover:bg-white/10 hover:border-white/50 cursor-pointer">
               Learn More
             </a>
-            <button onClick={() => window.openSecurityPopup?.('apply')} className="px-6 sm:px-8 py-3 rounded-full bg-white text-black font-normal text-xs transition-all duration-200 hover:bg-white/90 cursor-pointer">
+            <button onClick={() => window.openSecurityPopup?.('apply')} className="px-4 sm:px-6 md:px-8 py-2.5 sm:py-3 rounded-full bg-white text-black font-normal text-xs transition-all duration-200 hover:bg-white/90 cursor-pointer">
               Apply Now
             </button>
           </div>

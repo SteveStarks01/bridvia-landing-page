@@ -48,7 +48,7 @@ export default function ScrollAIPanel({ heroSectionSelector = ".hero-section", u
 
   return (
     <motion.div
-      className="fixed bottom-2 right-6 z-50"
+      className="fixed bottom-2 right-2 sm:right-6 z-50"
       animate={{ 
         opacity: isVisible ? 1 : 0,
         scale: isVisible ? 1 : 0.8,
