@@ -94,7 +94,7 @@ const SafeUnicornScene: React.FC<SafeUnicornSceneProps> = ({
   const [isLoading, setIsLoading] = useState(true);
   const [isMobile, setIsMobile] = useState(false);
   const [loadAttempts, setLoadAttempts] = useState(0);
-  const maxLoadAttempts = 3;
+  const maxLoadAttempts = 2; // Reduce retry attempts to avoid endless retries
 
   useEffect(() => {
     setIsClient(true);
@@ -112,11 +112,11 @@ const SafeUnicornScene: React.FC<SafeUnicornSceneProps> = ({
     checkIsMobile();
     window.addEventListener('resize', checkIsMobile);
     
-    // Set a timeout for loading state with retry logic
+    // Set a more generous timeout for loading - especially important for mobile networks
     const timer = setTimeout(() => {
       if (loadAttempts < maxLoadAttempts) {
         setLoadAttempts(prev => prev + 1);
-        setIsLoading(true);
+        // Don't reset loading state immediately, let the scene try to load
       } else {
         setIsLoading(false);
         if (!hasError) {
@@ -124,7 +124,7 @@ const SafeUnicornScene: React.FC<SafeUnicornSceneProps> = ({
           setHasError(true);
         }
       }
-    }, 8000); // 8 second timeout
+    }, isMobile ? 20000 : 12000); // Much more generous timeouts: 20s mobile, 12s desktop
 
     return () => {
       clearTimeout(timer);
@@ -150,8 +150,8 @@ const SafeUnicornScene: React.FC<SafeUnicornSceneProps> = ({
     return <LoadingFallback width={width} height={height} className={className} />;
   }
 
-  // If there's an error, invalid project ID, or loading issues, show fallback
-  if (hasError || !projectId || projectId.trim() === '' || (isLoading && loadAttempts >= maxLoadAttempts)) {
+  // Only show fallback if there's a real error or invalid project ID
+  if (hasError || !projectId || projectId.trim() === '') {
     return (
       <div className={`absolute inset-0 w-full h-full ${className || ''}`}>
         <div className={`absolute inset-0 bg-gradient-to-br ${fallbackGradient.from} ${fallbackGradient.via} ${fallbackGradient.to} opacity-80`} />
@@ -169,7 +169,7 @@ const SafeUnicornScene: React.FC<SafeUnicornSceneProps> = ({
           }}
         />
         
-        {/* Add subtle loading indicator for better UX */}
+        {/* Add subtle loading indicator if still loading */}
         {isLoading && (
           <div className="absolute inset-0 flex items-center justify-center">
             <motion.div
@@ -183,28 +183,6 @@ const SafeUnicornScene: React.FC<SafeUnicornSceneProps> = ({
             />
           </div>
         )}
-      </div>
-    );
-  }
-  
-  // For mobile devices, prefer fallback to avoid performance issues
-  if (isMobile && window.innerWidth <= 480) {
-    return (
-      <div className={`absolute inset-0 w-full h-full ${className || ''}`}>
-        <div className={`absolute inset-0 bg-gradient-to-br ${fallbackGradient.from} ${fallbackGradient.via} ${fallbackGradient.to} opacity-90`} />
-        
-        <motion.div
-          className="absolute inset-0 bg-gradient-to-br from-blue-600/15 via-transparent to-purple-600/15"
-          animate={{
-            scale: [1, 1.05, 1],
-            opacity: [0.4, 0.7, 0.4],
-          }}
-          transition={{
-            duration: 6,
-            repeat: Infinity,
-            ease: "easeInOut"
-          }}
-        />
       </div>
     );
   }
@@ -242,9 +220,9 @@ const SafeUnicornScene: React.FC<SafeUnicornSceneProps> = ({
             setIsLoading(false);
             setHasError(false);
           }}
-          // Add mobile-optimized props
+          // Mobile-optimized settings for better performance while keeping animations
           lazyLoad={isMobile}
-          scale={isMobile ? 0.8 : 1}
+          scale={isMobile ? 0.9 : 1}
           fps={isMobile ? 30 : 60}
         />
       </Suspense>

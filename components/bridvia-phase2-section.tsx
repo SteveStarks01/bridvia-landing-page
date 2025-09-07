@@ -62,7 +62,7 @@ const AnimatedBlackBackground = ({ children, className }: { children: React.Reac
 
   return (
     <div className={cn("relative overflow-hidden", className)}>
-      {/* Animated Background */}
+      {/* Animated Background - Render consistently on all devices */}
       <div className="absolute inset-0">
         {isClient && isMounted ? (
           <SafeUnicornScene 

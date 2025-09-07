@@ -63,7 +63,7 @@ const AnimatedBlueBackground = ({ children, className }: { children: React.React
 
   return (
     <div className={cn("relative overflow-hidden", className)}>
-      {/* Animated Background - Render on both desktop and mobile */}
+      {/* Animated Background - Render consistently on all devices */}
       <div className="absolute inset-0">
         {isClient && isMounted ? (
           <>
