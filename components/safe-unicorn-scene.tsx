@@ -1,6 +1,7 @@
 "use client"
 
 import React, { useState, useEffect, Suspense } from 'react';
+import { motion } from 'framer-motion';
 import UnicornErrorBoundary from './unicorn-error-boundary';
 
 // Dynamic import to handle potential loading issues

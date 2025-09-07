@@ -44,7 +44,6 @@ export default function Sections() {
       <WhyBridviaSection />
       <RaycastShowcaseSection />
       <CTASection />
-      <FooterSection />
     </>
   )
 }

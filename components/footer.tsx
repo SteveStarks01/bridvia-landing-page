@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import Image from 'next/image'
 
 // Import icons from lucide-react
 import {
@@ -20,10 +21,6 @@ const links = [
         title: 'About',
         href: '#about',
     },
-    {
-        title: 'Careers',
-        href: '#',
-    },
 ]
 
 export default function FooterSection() {
@@ -34,7 +31,27 @@ export default function FooterSection() {
                     href="/"
                     aria-label="go home"
                     className="mx-auto block size-fit mb-8">
-                    <div className="text-foreground text-xl font-medium tracking-tight hover:text-[#106861] transition-colors duration-300">Bridvia</div>
+                    {/* Logo Icon and Text Stack */}
+                    <div className="flex flex-col items-center">
+                        {/* Logo Icon */}
+                        <div className="mb-2">
+                            <Image 
+                                src="/logos/Logo Icon White.png" 
+                                alt="Bridvia Icon" 
+                                width={40} 
+                                height={40}
+                                className="object-contain"
+                            />
+                        </div>
+                        {/* Logo Text */}
+                        <Image 
+                            src="/logos/Logo Text White.png" 
+                            alt="Bridvia" 
+                            width={120} 
+                                height={30}
+                            className="object-contain"
+                        />
+                    </div>
                 </Link>
 
                 <div className="my-8 flex flex-wrap justify-center gap-6 text-sm">

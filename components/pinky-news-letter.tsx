@@ -2,6 +2,7 @@
 import { Warp } from "@paper-design/shaders-react"
 import { useState, useEffect } from "react"
 import { motion } from "framer-motion"
+import Image from "next/image"
 
 // Global function to trigger Brid AI with inquiry
 const triggerBridAI = (inquiry: string) => {
@@ -118,9 +119,16 @@ export default function NewsLetter() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease: "easeOut" }}
           >
-            <h1 className="text-white text-6xl md:text-8xl font-sans font-light italic mb-4">
-              Bridvia
-            </h1>
+            {/* Replace text "Bridvia" with Logo */}
+            <div className="flex justify-center mb-4">
+              <Image 
+                src="/logos/Logo Text White.png" 
+                alt="Bridvia" 
+                width={300} 
+                height={80}
+                className="object-contain"
+              />
+            </div>
             <p className="text-white/90 text-xl md:text-2xl font-light mb-8">
               Building Infrastructure that Connects Talent with Opportunity
             </p>

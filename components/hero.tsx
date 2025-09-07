@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from "react"
 import { MeshGradient, PulsingBorder } from "@paper-design/shaders-react"
 import { motion } from "framer-motion"
 import { Sparkles } from "lucide-react"
-
+import Image from "next/image"
 
 export default function ShaderShowcase() {
   const containerRef = useRef<HTMLDivElement>(null)
@@ -182,33 +182,16 @@ export default function ShaderShowcase() {
           whileHover={!isMobile ? { scale: 1.05 } : {}}
           transition={{ type: "spring", stiffness: 400, damping: 10 }}
         >
-          <motion.svg
-            fill="currentColor"
-            viewBox="0 0 100 100"
-            xmlns="http://www.w3.org/2000/svg"
-            aria-hidden="true"
-            className="size-10 text-white group-hover:drop-shadow-lg transition-all duration-300"
-            style={{
-              filter: "url(#logo-glow)",
-            }}
-            whileHover={!isMobile ? {
-              fill: "url(#logo-gradient)",
-              rotate: [0, -2, 2, 0],
-              transition: {
-                fill: { duration: 0.3 },
-                rotate: { duration: 0.6, ease: "easeInOut" },
-              },
-            } : {}}
-          >
-            <motion.path
-              d="M15 85V15h12l18 35 18-35h12v70h-12V35L45 70h-10L17 35v50H15z"
-              initial={{ pathLength: 1 }}
-              whileHover={!isMobile ? {
-                pathLength: [1, 0, 1],
-                transition: { duration: 1.2, ease: "easeInOut" },
-              } : {}}
+          {/* Replace the SVG "M" logo with your Icon Logo */}
+          <div className="relative">
+            <Image 
+              src="/logos/Logo Icon White.png" 
+              alt="Bridvia Icon" 
+              width={40} 
+              height={40}
+              className="object-contain"
             />
-          </motion.svg>
+          </div>
 
           <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
             {!isMobile && [...Array(6)].map((_, i) => {
