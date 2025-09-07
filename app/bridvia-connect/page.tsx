@@ -2,6 +2,7 @@
 import { useEffect } from "react";
 import Hero from "@/components/hero";
 import Sections from "@/components/sections";
+import FooterSection from "@/components/footer";
 import ScrollAIPanel from "@/components/scroll-ai-panel";
 
 // Note: Since this is a client component, metadata needs to be handled by the root layout
@@ -27,6 +28,7 @@ export default function BridviaConnectPage() {
         <Hero />
       </div>
       <Sections />
+      <FooterSection />
       <ScrollAIPanel userLocation="bridvia-connect" />
     </>
   );

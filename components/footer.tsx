@@ -2,12 +2,9 @@ import Link from 'next/link'
 
 // Import icons from lucide-react
 import {
-    Github,
-    Twitter,
     Linkedin,
     Mail,
     Globe,
-    BookOpen,
 } from 'lucide-react'
 
 const links = [
@@ -25,14 +22,6 @@ const links = [
     },
     {
         title: 'Careers',
-        href: '#',
-    },
-    {
-        title: 'Contact',
-        href: '#',
-    },
-    {
-        title: 'Support',
         href: '#',
     },
 ]
@@ -61,7 +50,7 @@ export default function FooterSection() {
                 
                 <div className="my-8 flex flex-wrap justify-center gap-6 text-sm">
                     <Link
-                        href="#"
+                        href="https://www.linkedin.com/company/bridvia/"
                         target="_blank"
                         rel="noopener noreferrer"
                         aria-label="LinkedIn"
@@ -69,23 +58,7 @@ export default function FooterSection() {
                         <Linkedin className="size-5" />
                     </Link>
                     <Link
-                        href="#"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        aria-label="Twitter"
-                        className="text-muted-foreground hover:text-[#106861] block transition-colors">
-                        <Twitter className="size-5" />
-                    </Link>
-                    <Link
-                        href="#"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        aria-label="GitHub"
-                        className="text-muted-foreground hover:text-[#106861] block transition-colors">
-                        <Github className="size-5" />
-                    </Link>
-                    <Link
-                        href="#"
+                        href="mailto:info@bridvia.com"
                         target="_blank"
                         rel="noopener noreferrer"
                         aria-label="Email"
@@ -93,20 +66,12 @@ export default function FooterSection() {
                         <Mail className="size-5" />
                     </Link>
                     <Link
-                        href="#"
+                        href="/"
                         target="_blank"
                         rel="noopener noreferrer"
                         aria-label="Website"
                         className="text-muted-foreground hover:text-[#106861] block transition-colors">
                         <Globe className="size-5" />
-                    </Link>
-                    <Link
-                        href="#"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        aria-label="Blog"
-                        className="text-muted-foreground hover:text-[#106861] block transition-colors">
-                        <BookOpen className="size-5" />
                     </Link>
                 </div>
                 
